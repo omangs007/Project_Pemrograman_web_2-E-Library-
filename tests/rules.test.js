@@ -132,14 +132,18 @@ test('bukuDariPinjam mengembalikan salinan yang tidak dapat mengubah stok store'
   eq(Store.buku.find('BK003').jumlahTersedia, sebelum);
 });
 
-test('prosesPengembalian kedua kali tidak menambah stok lagi', function () {
+test('prosesPengembalian kedua tidak menambah stok lagi saat masih ada eksemplar dipinjam', function () {
   Store.reset();
-  var stokSebelum = Store.buku.find('BK003').jumlahTersedia;
+  // Buat peminjaman kedua agar ada 2 eksemplar BK003 yang sedang dipinjam
+  R().catatPeminjaman({ idAnggota: 'AG014', idBuku: 'BK003', tglPinjam: R().hariIni(), idPetugas: 'PT001' });
+  // Sekarang BK003 punya 2 eksemplar dipinjam, jumlahTersedia turun dari 7 menjadi 6
+  var sebelum = Store.buku.find('BK003').jumlahTersedia;           // 6
   R().prosesPengembalian('PJ001', R().hariIni());
-  var stokSesudahPertama = Store.buku.find('BK003').jumlahTersedia;
+  var setelahSatu = Store.buku.find('BK003').jumlahTersedia;       // 7
   R().prosesPengembalian('PJ001', R().tambahHari(R().hariIni(), 1));
-  eq(stokSesudahPertama, stokSebelum + 1);
-  eq(Store.buku.find('BK003').jumlahTersedia, stokSesudahPertama);
+  var setelahDua = Store.buku.find('BK003').jumlahTersedia;        // harus tetap 7, bukan 8
+  eq(setelahSatu, sebelum + 1);
+  eq(setelahDua, setelahSatu);
 });
 
 test('prosesPengembalian kedua kali tidak membuat denda duplikat', function () {
