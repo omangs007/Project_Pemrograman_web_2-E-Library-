@@ -195,6 +195,16 @@ var Store = (function () {
   }
 
   function prosesPengembalian(idPinjam, tglKembali) {
+    var pinjamLama = pastikan().peminjaman.find(function (x) { return x.id === idPinjam; });
+    if (!pinjamLama) return { pinjam: null, denda: null };
+    if (pinjamLama.tglKembali) {
+      var dendaLama = pastikan().denda.find(function (x) { return x.idPinjam === idPinjam; });
+      return {
+        pinjam: Object.assign({}, pinjamLama),
+        denda: dendaLama ? Object.assign({}, dendaLama) : null,
+        sudahDikembalikan: true
+      };
+    }
     var tgl = tglKembali || hariIni();
     var pinjam = koleksi('peminjaman').update(idPinjam, { tglKembali: tgl, status: 'Dikembalikan' });
     if (!pinjam) return { pinjam: null, denda: null };
