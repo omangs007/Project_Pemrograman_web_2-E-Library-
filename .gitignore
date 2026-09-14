@@ -17,3 +17,7 @@ node_modules/
 
 # Workspace SDD (scratch, bukan bagian proyek)
 .superpowers/
+
+# Artefak alat bantu (bukan bagian proyek)
+.playwright-mcp/
+ds-*.png
