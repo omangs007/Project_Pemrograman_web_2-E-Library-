@@ -469,3 +469,28 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
 .rincian { margin-top: 16px; border-top: 1px solid var(--glass-border); padding-top: 12px; font-size: 14px; }
 .rincian div { display: flex; justify-content: space-between; padding: 5px 0; }
 .rincian .total { font-weight: 700; font-size: 16px; border-top: 1px solid var(--glass-border); margin-top: 6px; padding-top: 10px; }
+
+/* --- Bagian form --- */
+.form-bagian { padding: 24px; }
+.form-bagian + .form-bagian { border-top: 1px solid var(--glass-border); }
+.form-bagian h3 { font-size: 16px; margin-bottom: 4px; }
+.form-bagian .keterangan { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+.form-aksi {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 18px 24px; border-top: 1px solid var(--glass-border);
+}
+@media (max-width: 767px) {
+  .form-aksi { flex-direction: column-reverse; }
+  .form-aksi .btn { width: 100%; }
+  .form-bagian { padding: 18px 16px; }
+}
+
+/* --- Pratinjau sampul --- */
+.sampul-area { display: flex; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+.sampul-pratinjau {
+  width: 108px; height: 150px; flex: none;
+  display: grid; place-items: center; overflow: hidden;
+  border-radius: 12px; border: 1px dashed var(--glass-border);
+  background: var(--glass); color: var(--muted); font-size: 12px; text-align: center; padding: 8px;
+}
+.sampul-pratinjau img { width: 100%; height: 100%; object-fit: cover; }
