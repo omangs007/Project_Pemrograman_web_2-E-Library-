@@ -170,7 +170,24 @@ var UI = (function () {
       if (fokusSebelumnya && fokusSebelumnya.focus) fokusSebelumnya.focus();
       if (opsi.onTutup) opsi.onTutup(dikonfirmasi);
     }
-    function onKey(e) { if (e.key === 'Escape') tutup(); }
+    // Jaga fokus pengguna keyboard di dalam dialog selama dialog terbuka.
+    function fokusableDalamModal() {
+      return Array.prototype.slice.call(
+        overlay.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      ).filter(function (el) { return el.offsetParent !== null; });
+    }
+
+    function onKey(e) {
+      if (e.key === 'Escape') return tutup();
+      if (e.key !== 'Tab') return;
+      var fokusable = fokusableDalamModal();
+      if (!fokusable.length) { e.preventDefault(); return; }
+      var pertama = fokusable[0];
+      var terakhir = fokusable[fokusable.length - 1];
+      if (e.shiftKey && document.activeElement === pertama) { e.preventDefault(); terakhir.focus(); }
+      else if (!e.shiftKey && document.activeElement === terakhir) { e.preventDefault(); pertama.focus(); }
+      else if (!overlay.contains(document.activeElement)) { e.preventDefault(); pertama.focus(); }
+    }
 
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) return tutup();
@@ -185,8 +202,10 @@ var UI = (function () {
     document.addEventListener('keydown', onKey);
     document.body.appendChild(overlay);
 
-    var fokusPertama = overlay.querySelector('input, select, textarea, button[data-aksi="konfirmasi"]');
-    if (fokusPertama) fokusPertama.focus();
+    var kotak = overlay.querySelector('.modal-box');
+    kotak.setAttribute('tabindex', '-1');
+    var fokusPertama = overlay.querySelector('input, select, textarea, button[data-aksi="konfirmasi"], button[data-aksi="batal"]') || kotak;
+    fokusPertama.focus();
     return tutup;
   }
 

@@ -160,7 +160,7 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   position: fixed; inset: 0; z-index: 60;
   display: flex; align-items: center; justify-content: center;
   padding: 16px;
-  background: var(--glass);
+  background: rgba(2, 6, 23, .55);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   animation: fadeIn .18s ease;
@@ -198,9 +198,9 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   animation: popIn .2s ease;
 }
 .toast::before { content: ""; width: 8px; height: 8px; border-radius: 999px; flex: none; }
-.toast-ok::before   { background: var(--orb-2); }
-.toast-bad::before  { background: var(--text); }
-.toast-info::before { background: var(--orb-1); }
+.toast-ok::before   { background: #14B8A6; }
+.toast-bad::before  { background: #F43F5E; }
+.toast-info::before { background: #6366F1; }
 .toast-keluar { opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; }
 
 @media (prefers-reduced-motion: reduce) {
