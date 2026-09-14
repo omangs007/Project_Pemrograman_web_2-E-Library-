@@ -368,3 +368,42 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   padding: 6px; border: none; background: transparent; color: var(--muted); cursor: pointer;
 }
 .input-sandi button:hover { color: var(--text); }
+
+/* --- Kartu statistik --- */
+.stat-kartu { display: flex; align-items: flex-start; gap: 16px; padding: 20px; }
+.stat-ikon {
+  width: 44px; height: 44px; flex: none;
+  display: grid; place-items: center; border-radius: 12px;
+}
+.stat-ikon svg { width: 22px; height: 22px; }
+.stat-ikon-brand { background: rgba(99, 102, 241, .16); color: #6366F1; }
+.stat-ikon-ok    { background: rgba(20, 184, 166, .16); color: #14B8A6; }
+.stat-ikon-warn  { background: rgba(245, 158, 11, .16); color: #F59E0B; }
+.stat-ikon-bad   { background: rgba(244, 63, 94, .16);  color: #F43F5E; }
+.stat-label { font-size: 13px; color: var(--muted); }
+.stat-catatan { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* --- Linimasa aktivitas --- */
+.linimasa { list-style: none; margin: 0; padding: 0; }
+.linimasa li { position: relative; padding: 0 0 18px 24px; }
+.linimasa li::before {
+  content: ""; position: absolute; left: 4px; top: 6px;
+  width: 9px; height: 9px; border-radius: 999px; background: #6366F1;
+}
+.linimasa li::after {
+  content: ""; position: absolute; left: 8px; top: 18px; bottom: 0;
+  width: 1px; background: var(--glass-border);
+}
+.linimasa li:last-child { padding-bottom: 0; }
+.linimasa li:last-child::after { display: none; }
+.linimasa .waktu { font-size: 12px; color: var(--muted); }
+
+/* --- Daftar peringkat --- */
+.peringkat { list-style: none; margin: 0; padding: 0; }
+.peringkat li { padding: 10px 0; border-bottom: 1px solid var(--glass-border); }
+.peringkat li:last-child { border-bottom: none; }
+.peringkat-bar { height: 6px; margin-top: 8px; border-radius: 999px; background: var(--glass-border); overflow: hidden; }
+.peringkat-bar span { display: block; height: 100%; border-radius: 999px; background: #6366F1; }
+
+.grafik-bungkus { position: relative; height: 280px; }
+@media (max-width: 767px) { .grafik-bungkus { height: 220px; } }
