@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk &mdash; Perpustakaan Digital Universitas Pamulang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/js/config.js"></script>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="app-bg">
+
+<main class="masuk-layar">
+  <div class="glass-panel masuk-kartu">
+
+    <div class="masuk-logo">P</div>
+    <h1 class="text-2xl text-center">Perpustakaan Digital</h1>
+    <p class="text-muted text-center text-sm mt-1">Universitas Pamulang &mdash; Panel Administrator</p>
+
+    <form id="formMasuk" class="mt-8 space-y-4" novalidate>
+      <div>
+        <label class="field-label" for="email">Alamat Surel</label>
+        <input class="glass-input" type="email" id="email" name="email" placeholder="admin@unpam.ac.id" autocomplete="username">
+      </div>
+
+      <div>
+        <label class="field-label" for="sandi">Kata Sandi</label>
+        <div class="input-sandi">
+          <input class="glass-input" type="password" id="sandi" name="sandi" placeholder="Masukkan kata sandi" autocomplete="current-password">
+          <button type="button" id="lihatSandi" aria-label="Perlihatkan kata sandi">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <label class="flex items-center gap-2 text-sm text-muted cursor-pointer">
+        <input type="checkbox" id="ingatSaya" class="w-4 h-4 accent-brand"> Ingat saya di perangkat ini
+      </label>
+
+      <button type="submit" class="btn btn-primary w-full">Masuk ke Panel</button>
+    </form>
+
+    <div class="masuk-demo">
+      <strong class="block mb-1" style="color:var(--text)">Akun demo</strong>
+      Administrator &mdash; <code>admin@unpam.ac.id</code> / <code>admin123</code><br>
+      Pustakawan &mdash; <code>siti@unpam.ac.id</code> / <code>admin123</code>
+    </div>
+
+  </div>
+</main>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/page-login.js"></script>
+</body>
+</html>
