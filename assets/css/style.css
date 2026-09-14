@@ -206,3 +206,70 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay, .modal-box, .toast { animation: none; }
 }
+
+/* --- Tabel --- */
+.tabel-bungkus { width: 100%; }
+.tabel { width: 100%; border-collapse: collapse; font-size: 14px; color: var(--text); }
+.tabel thead th {
+  position: sticky; top: 0; z-index: 1;
+  padding: 12px 16px; text-align: left; white-space: nowrap;
+  font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted);
+  background: var(--glass-strong);
+  border-bottom: 1px solid var(--glass-border);
+}
+.tabel thead th[data-urut] { cursor: pointer; user-select: none; }
+.tabel thead th[data-urut]:hover { color: var(--text); }
+.tabel thead th .penanda-urut { margin-left: 6px; opacity: .5; }
+.tabel thead th[aria-sort] .penanda-urut { opacity: 1; color: #6366F1; }
+.tabel tbody td { padding: 14px 16px; border-bottom: 1px solid var(--glass-border); vertical-align: middle; }
+.tabel tbody tr:last-child td { border-bottom: none; }
+.tabel tbody tr { transition: background-color .15s; }
+.tabel tbody tr:hover { background: var(--glass); }
+.tabel .kol-aksi { width: 1%; white-space: nowrap; text-align: right; }
+.tabel .kol-angka { text-align: right; font-variant-numeric: tabular-nums; }
+
+.tabel-kosong { padding: 48px 16px; text-align: center; color: var(--muted); }
+.tabel-kosong strong { display: block; color: var(--text); margin-bottom: 6px; font-size: 16px; }
+
+.tabel-kaki {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  padding: 14px 16px; border-top: 1px solid var(--glass-border);
+  font-size: 13px; color: var(--muted);
+}
+.paginasi { display: flex; flex-wrap: wrap; gap: 6px; }
+.paginasi button {
+  min-width: 34px; height: 34px; padding: 0 10px;
+  border-radius: 10px; border: 1px solid var(--glass-border);
+  background: transparent; color: var(--text); font: inherit; cursor: pointer;
+}
+.paginasi button:hover:not(:disabled) { background: var(--glass); }
+.paginasi button[aria-current="page"] { background: #6366F1; border-color: #6366F1; color: #fff; font-weight: 600; }
+.paginasi button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* --- Mode kartu di layar sempit ---
+   Tabel TIDAK digulir ke samping. Tiap baris berubah menjadi kartu
+   dengan pasangan label-nilai; label diambil dari atribut data-label. */
+@media (max-width: 767px) {
+  .tabel thead { display: none; }
+  .tabel, .tabel tbody, .tabel tr, .tabel td { display: block; width: 100%; box-sizing: border-box; }
+  .tabel tbody tr {
+    margin-bottom: 12px; padding: 4px 0;
+    border: 1px solid var(--glass-border); border-radius: 16px;
+    background: var(--glass);
+  }
+  .tabel tbody td {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 10px 16px; border-bottom: 1px solid var(--glass-border); text-align: right;
+    white-space: normal; overflow-wrap: anywhere;
+  }
+  .tabel tbody td > * { min-width: 0; max-width: 100%; }
+  .tabel tbody td:last-child { border-bottom: none; }
+  .tabel tbody td::before {
+    content: attr(data-label);
+    flex: 0 1 40%; font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .04em; color: var(--muted); text-align: left;
+  }
+  .tabel .kol-aksi, .tabel .kol-angka { text-align: right; width: auto; }
+}
