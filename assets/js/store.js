@@ -68,10 +68,12 @@ var Store = (function () {
   function koleksi(nama) {
     var prefiks = PREFIKS[nama];
     return {
-      all: function () { return pastikan()[nama].slice(); },
+      /* Pembacaan mengembalikan salinan agar pemanggil tidak dapat
+         mengubah store tanpa melalui update(). */
+      all: function () { return pastikan()[nama].map(function (r) { return Object.assign({}, r); }); },
       find: function (id) {
         var hasil = pastikan()[nama].find(function (r) { return r.id === id; });
-        return hasil || null;
+        return hasil ? Object.assign({}, hasil) : null;
       },
       create: function (obj) {
         var arr = pastikan()[nama];
@@ -111,19 +113,19 @@ var Store = (function () {
     detail: koleksi('detailPeminjaman'),
     denda: koleksi('denda'),
     kategori: {
-      all: function () { return pastikan().kategori.slice(); },
+      all: function () { return pastikan().kategori.map(function (r) { return Object.assign({}, r); }); },
       find: function (id) {
         var hasil = pastikan().kategori.find(function (r) { return r.id === id; });
-        return hasil || null;
+        return hasil ? Object.assign({}, hasil) : null;
       }
     },
     petugas: {
-      all: function () { return pastikan().petugas.slice(); },
+      all: function () { return pastikan().petugas.map(function (r) { return Object.assign({}, r); }); },
       find: function (id) {
         var hasil = pastikan().petugas.find(function (r) { return r.id === id; });
-        return hasil || null;
+        return hasil ? Object.assign({}, hasil) : null;
       }
     },
-    tren: function () { return pastikan().trenBulanan.slice(); }
+    tren: function () { return pastikan().trenBulanan.map(function (r) { return Object.assign({}, r); }); }
   };
 })();
