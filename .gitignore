@@ -1,0 +1,16 @@
+# Sistem operasi
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Dependensi (tidak dipakai di proyek ini, jaga-jaga)
+node_modules/
+
+# Berkas sementara
+*.log
+*.tmp

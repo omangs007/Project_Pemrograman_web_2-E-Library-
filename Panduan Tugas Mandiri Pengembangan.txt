@@ -1,0 +1,108 @@
+Panduan Tugas Mandiri: Pengembangan Front-End Admin Panel Sistem Informasi
+Mata Kuliah: Pemrograman Web 2 (Client-Side Programming)
+
+Bobot Tugas: Tugas Ke 1 (Project-Based Learning)
+
+Target Utama: Mahasiswa mampu merancang dan mengimplementasikan antarmuka (user interface) Halaman Admin Panel yang responsif, interaktif, dan informatif menggunakan teknologi Client-Side (HTML5, CSS3, dan JavaScript/Framework CSS).
+
+📋 Deskripsi Tugas
+Anda diminta untuk membangun sebuah Admin Panel (Back-Office) untuk satu sistem informasi spesifik. Pada tugas ini berfokus pada Client-Side Programming, fokus utama tugas ini adalah pada arsitektur informasi, kejelasan navigasi, estetika desain (UI), serta pengalaman pengguna (UX) tanpa perlu menghubungkannya ke database server (no back-end/mock data only),  Atau data bisa disimpan didalam Spreadsheet google.
+
+🎨 Ketentuan Tema Visual & Arsitektur UI (Tambahan)
+Untuk memastikan Admin Panel yang dibangun tidak hanya fungsional tetapi juga modern, adaptif, dan memiliki standar industri, setiap orang wajib menerapkan salah satu ketentuan estetika dan arsitektur UI berikut: 
+
+Material Design
+Glassmorphism
+Skeuomorphism
+Neumorphism
+Sebagai Inspirasi bisa lihat contoh Design dari berbagai Sumber Website. Contoh : https://dribbble.com/
+
+Gunakan Berbagai Macam Tools Design Seperti Stitch By google, Figma dan Antigrafity By Google Sebagai Code Editornya. cara Penggunaan bisa lihat pada Video Youtube disini. 
+
+video Penggunaan Stitch
+
+📂 Pilihan Topik Sistem Informasi
+Setiap Mahasiswa wajib memilih topik berdasarkan urutan Presensi 1-10 dan berulang untuk urutan ke 11 dan seterusnya:
+
+Sistem Informasi Perpustakaan Digital (E-Library)
+Sistem Manajemen Sarana dan Prasarana (Asset Management)
+Sistem Informasi Akademik Sekolah (SIAKAD)
+Sistem Informasi Koperasi Simpan Pinjam
+Sistem Point of Sales (POS / Kasir Toko)
+Aplikasi Manajemen Keuangan (Finance Tracking)
+Aplikasi Kepegawaian & SDM (HRMS - Human Resource Management System)
+Learning Management System (LMS - Platform Pembelajaran)
+CMS Company Profile / Website Profil Sekolah
+Sistem Penerimaan Peserta Didik Baru (PPDB Online)
+🛠️ Tahapan Pelaksanaan Tugas (Milestone)
+Tugas ini dibagi menjadi 3 tahapan (Milestone) yang wajib dikumpulkan secara berkala.
+
+Milestone 1 (Pekan Ke 3): Perencanaan Menu (.md) & UI Wireframing (Stitch / Figma)
+Sebelum masuk ke tahap coding, Anda harus merencanakan struktur aplikasi secara tekstual dan visual (Low-to-Mid Fidelity).
+
+Dokumentasi (.md): Membuat daftar hirarki menu (Sidebar/Navbar) dan konsep ER-D sederhana menggunakan sintaks Mermaid.js di dalam file PERANCANGAN.md.
+
+UI Wireframing & Prototyping:
+
+Gunakan Stitch google (atau tools HTML/CSS wireframing sejenis) untuk merancang tata letak komponen secara cepat, menyusun skema komponen polimorfik, atau memetakan User Flow antarmuka admin.
+
+Gunakan Figma untuk menyusun Design System awal (menentukan Color Palettes, Typography Styles, dan komponen reusable seperti Button, Form Input, dan Card) serta membuat High-Fidelity UI Design untuk halaman Dashboard dan Data Master.
+
+Output: File PERANCANGAN.md yang di dalamnya wajib menyertakan link publik ke project Figma dan embed link/screenshot hasil rancangan dari Stitch/Figma.
+
+ 
+
+Milestone 2 (Pekan ke 5): Slicing & Layouting (Mengubah Desain Figma ke HTML/CSS)
+Pada tahap ini, mahasiswa mulai menerjemahkan rancangan visual yang sudah matang di Figma dan Stitch ke dalam kode Client-Side nyata.
+
+Figma-to-Code: Lakukan slicing elemen visual dari Figma (mengambil kode warna HEX, ukuran font, padding/margin, dan aset gambar/icon) ke dalam struktur HTML5 dan CSS3 (atau Tailwind CSS).
+
+Membuat struktur layouting dasar Admin Panel (Sidebar, Header, Content Area, Footer) yang responsif berdasarkan grid/flexbox yang telah disimulasikan di Figma.
+
+Output: Halaman Master/Template dasar (layout.html).
+
+ 
+
+Milestone 3 (Pekan Ke 7): Implementasi Komponen & Interaktivitas UI (JavaScript & Slicing)
+Tahap akhir berupa pembuatan halaman-halaman spesifik berdasarkan topik yang dipilih.
+
+Pembuatan Halaman Spesifik: Minimal membuat 4 halaman:
+
+Dashboard: Menampilkan ringkasan data (menggunakan cards, grafik/chart menggunakan library client-side seperti Chart.js).
+
+Halaman Data Tabel (Master): Menampilkan data dalam bentuk tabel, lengkap dengan tombol aksi (Tambah, Edit, Hapus).
+
+Halaman Form (Input/Edit): Form interaktif untuk manipulasi data dengan validasi input menggunakan JavaScript.
+
+Halaman Laporan/Detail: Halaman cetak atau rangkuman aktivitas sistem.
+
+Interaktivitas Client-Side: Menggunakan JavaScript untuk memanipulasi DOM (misalnya: toggle sidebar, memunculkan modal konfirmasi hapus, validasi form, atau manipulasi mock data di dalam tabel).
+
+Output: Source code lengkap (HTML, CSS, JS) dan upload di Vercel atau github siap demonstrasi.
+
+📝 Format Pengumpulan Tugas
+Struktur Folder Proyek: Proyek harus diorganisasi dengan rapi, contoh:
+
+Repository Git: Tugas dikumpulkan dengan cara mengunggah kode ke GitHub/GitLab masing-masing. Link repositori dikirimkan melalui LMS Mentari.
+
+├── docs/
+│   └── perancangan.md  <-- Tugas Milestone 1
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── img/
+├── pages/
+│   ├── dashboard.html
+│   ├── data-master.html
+│   └── form.html / dll
+└── index.html          <-- Halaman Utama/Login Admin
+
+ 
+
+📊 Kriteria Penilaian
+No	Komponen Penilaian	Bobot	Indikator
+1	Milestone 1 (Dokumentasi .md)	20%	Kelengkapan struktur menu di .md, kejelasan User Flow/Wireframe di Stitch google, serta kerapian Design System (warna, komponen, tipografi) yang dibuat di Figma.
+2	Kualitas Kode HTML & CSS	30%	Penggunaan tag semantik HTML5, kerapian struktur class CSS, kebersihan kode, dan responsivitas layout (mobile-friendly).
+3	Interaktivitas JavaScript	20%	Berfungsinya komponen interaktif (modal, sidebar toggle, validasi input, grafik chart).
+4	Kesesuaian UI & UX Topik	20%	Desain antarmuka sesuai dengan karakteristik sistem yang dipilih (contoh: POS harus memiliki UI yang cepat untuk kasir, Dashboard Finance harus kaya akan grafik).
+5	Presentasi	10%	kemampuan menjelaskan project saat demo.
