@@ -1,8 +1,8 @@
 var BARIS = [
   { id: 'A', judul: 'Algoritma dan Struktur Data', pengarang: 'Rinaldi', kategori: 'KT007', stok: 6 },
   { id: 'B', judul: 'Bumi Manusia',                pengarang: 'Pramoedya', kategori: 'KT008', stok: 9 },
-  { id: 'C', judul: 'Kalkulus Dasar',              pengarang: 'Purcell',  kategori: 'KT006', stok: 0 },
-  { id: 'D', judul: 'Basis Data Relasional',       pengarang: 'Fathansyah', kategori: 'KT007', stok: 5 }
+  { id: 'C', judul: 'Kalkulus Dasar',              pengarang: 'Purcell',  kategori: 'KT006', stok: 10 },
+  { id: 'D', judul: 'Basis Data Relasional',       pengarang: 'Fathansyah', kategori: 'KT007', stok: 2 }
 ];
 
 test('saring tanpa kueri mengembalikan seluruh baris', function () {
@@ -47,7 +47,7 @@ test('urutkan mendukung arah menurun', function () {
 
 test('urutkan membandingkan angka sebagai angka, bukan teks', function () {
   var h = DataTable.urutkan(BARIS, 'stok', 'naik');
-  eq(h.map(function (r) { return r.stok; }), [0, 5, 6, 9]);
+  eq(h.map(function (r) { return r.stok; }), [2, 6, 9, 10]);
 });
 
 test('urutkan tidak mengubah array masukan', function () {

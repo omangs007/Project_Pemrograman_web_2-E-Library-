@@ -53,8 +53,13 @@ var Layout = (function () {
 
   /* --- Sesi ------------------------------------------------------ */
   function sesi() {
-    try { return JSON.parse(localStorage.getItem(KEY_SESI) || 'null'); }
-    catch (e) { return null; }
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY_SESI) || 'null');
+      if (!v || typeof v !== 'object' || Array.isArray(v) || typeof v.nama !== 'string') return null;
+      return v;
+    } catch (e) {
+      return null;
+    }
   }
 
   function masuk(petugas) {
