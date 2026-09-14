@@ -1,0 +1,156 @@
+/* ============================================================
+   E-Library — Universitas Pamulang
+   Variabel tema + kelas komponen.
+   JANGAN pakai @apply di sini: Tailwind Play CDN tidak
+   mengompilasi berkas CSS eksternal.
+   ============================================================ */
+
+/* --- Token tema: :root = mode terang, .dark = mode gelap --- */
+:root {
+  --bg-a: #EEF2FF;
+  --bg-b: #E0E7FF;
+  --glass: rgba(255, 255, 255, .65);
+  --glass-strong: rgba(255, 255, 255, .86);
+  --glass-border: rgba(255, 255, 255, .90);
+  --text: #0F172A;
+  --muted: #475569;
+  --shadow-card: 0 8px 32px rgba(15, 23, 42, .10);
+  --shadow-modal: 0 24px 64px rgba(15, 23, 42, .22);
+  --orb-1: rgba(99, 102, 241, .35);
+  --orb-2: rgba(20, 184, 166, .28);
+}
+.dark {
+  --bg-a: #0B1020;
+  --bg-b: #131A33;
+  --glass: rgba(255, 255, 255, .08);
+  --glass-strong: rgba(255, 255, 255, .14);
+  --glass-border: rgba(255, 255, 255, .18);
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, .24);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, .40);
+  --orb-1: rgba(99, 102, 241, .45);
+  --orb-2: rgba(20, 184, 166, .32);
+}
+
+/* --- Dasar --- */
+html { color-scheme: light dark; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg-a);
+  transition: background-color .3s ease, color .3s ease;
+}
+h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-weight: 700; margin: 0; }
+:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; border-radius: 6px; }
+
+/* Latar mesh gradient + dua orb blur.
+   Orb memakai ::before/::after pada .app-bg agar tidak menambah markup. */
+.app-bg {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, var(--orb-1), transparent 60%),
+    radial-gradient(900px 500px at 95% 10%, var(--orb-2), transparent 55%),
+    linear-gradient(160deg, var(--bg-a) 0%, var(--bg-b) 100%);
+  background-attachment: fixed;
+}
+
+/* --- Permukaan glass --- */
+.glass-card,
+.glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+}
+.glass-card  { border-radius: 16px; }
+.glass-panel { border-radius: 24px; -webkit-backdrop-filter: blur(32px) saturate(140%); backdrop-filter: blur(32px) saturate(140%); }
+
+/* Permukaan pekat untuk data tabular — keterbacaan menang atas efek. */
+.glass-strong {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  backdrop-filter: blur(20px) saturate(120%);
+}
+
+/* Cadangan untuk peramban tanpa backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-card, .glass-panel { background: var(--glass-strong); }
+}
+
+/* --- Kontrol --- */
+.glass-input,
+.glass-select,
+.glass-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  color: var(--text);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  font: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+.glass-input::placeholder, .glass-textarea::placeholder { color: var(--muted); }
+.glass-input:focus, .glass-select:focus, .glass-textarea:focus {
+  outline: none;
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, .25);
+}
+.glass-input[aria-invalid="true"] { border-color: #F43F5E; box-shadow: 0 0 0 3px rgba(244, 63, 94, .22); }
+.field-error { display: block; margin-top: 6px; color: #F43F5E; font-size: 12px; }
+.field-label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: var(--muted); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px; border-radius: 12px; border: 1px solid transparent;
+  font: inherit; font-weight: 600; cursor: pointer;
+  transition: transform .15s, filter .15s, background-color .2s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: #6366F1; color: #fff; box-shadow: 0 6px 20px rgba(99, 102, 241, .35); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: var(--glass); border-color: var(--glass-border); color: var(--text); }
+.btn-ghost:hover { background: var(--glass-strong); }
+.btn-danger { background: #F43F5E; color: #fff; }
+.btn-danger:hover { filter: brightness(1.08); }
+.btn-icon { padding: 8px; border-radius: 10px; background: transparent; border: 1px solid transparent; color: var(--muted); cursor: pointer; }
+.btn-icon:hover { background: var(--glass); border-color: var(--glass-border); color: var(--text); }
+
+/* --- Lencana & chip. Warna tidak pernah jadi satu-satunya penanda:
+       teks selalu ikut. --- */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+.badge-ok   { color: #0D9488; background: rgba(20, 184, 166, .16); }
+.badge-warn { color: #B45309; background: rgba(245, 158, 11, .16); }
+.badge-bad  { color: #BE123C; background: rgba(244, 63, 94, .16); }
+.badge-muted{ color: var(--muted); background: var(--glass-strong); }
+.dark .badge-ok   { color: #5EEAD4; }
+.dark .badge-warn { color: #FCD34D; }
+.dark .badge-bad  { color: #FDA4AF; }
+
+.chip {
+  display: inline-block; padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+  color: #4F46E5; background: rgba(99, 102, 241, .14);
+}
+.dark .chip { color: #A5B4FC; }
+
+/* --- Angka statistik: digit sejajar antar baris --- */
+.stat-value, .tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+.stat-value { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 32px; font-weight: 700; line-height: 1.1; }
+.text-muted { color: var(--muted); }
