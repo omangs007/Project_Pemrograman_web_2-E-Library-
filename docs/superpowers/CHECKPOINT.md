@@ -52,10 +52,10 @@ Node di atas.
 | 13 | Form Buku | Selesai, review bersih setelah 1 fix round |
 | 14 | Laporan dan stylesheet cetak | Selesai, review bersih setelah 3 fix round |
 | 15 | Modal Pengaturan | Selesai, review bersih setelah 1 fix round |
-| 16 | Dokumentasi Milestone 1 dan README | Fix round 1 berjalan |
-| 17 | Verifikasi menyeluruh dan deploy | **Sedang dikerjakan** — Step 10-12 menunggu pengguna |
+| 16 | Dokumentasi Milestone 1 dan README | Selesai, review bersih setelah 1 fix round |
+| 17 | Verifikasi menyeluruh dan deploy | Step 1-9 selesai; Step 10-12 menunggu pengguna |
 
-Branch: `feat/admin-panel`. Commit terakhir: `8a1a0a5`.
+Branch: `feat/admin-panel`. Commit terakhir: `620f34e` (33 commit di atas `main`).
 
 ## Yang harus dikerjakan berikutnya
 
@@ -134,3 +134,38 @@ sebelum penyerahan. Yang paling menonjol:
   bertahan di sekitar posisi semula.
 - Pengurutan kolom hanya bisa lewat tetikus; `<th>` belum bisa difokuskan
   keyboard.
+
+## Status gerbang akhir — 15 September 2026
+
+Ketujuh belas task selesai dan seluruhnya melewati gerbang review per-task. Review
+menyeluruh seluruh branch sudah dijalankan atas 33 commit dan memberi verdict
+**BELUM SIAP DISERAHKAN**: nol Critical, enam Important. Laporan lengkapnya ada di
+`.superpowers/sdd/2026-09-14-elibrary-admin-panel/review-akhir.md`.
+
+Dari 51 temuan Minor yang ditunda sepanjang eksekusi, reviewer menilai hanya dua
+yang wajib diperbaiki; sisanya diterima apa adanya.
+
+### Enam temuan yang menahan penyerahan
+
+1. Menyunting stok dapat membatalkan perlindungan pinjaman aktif, sehingga buku
+   yang masih dipinjam dapat lolos penjaga hapus.
+2. Menghapus buku atau anggota menghilangkan identitasnya pada transaksi riwayat,
+   yang lalu tampil sebagai "-" di laporan.
+3. Kegagalan penulisan localStorage tidak diteruskan ke seluruh jalur, dan
+   sirkulasi dapat tersimpan sebagian sehingga basis data menjadi tidak konsisten.
+4. Grafik pada halaman Laporan memakai deret seed tetap dan tidak mengikuti
+   saringan periode, padahal ringkasan dan tabel di halaman yang sama mengikutinya.
+5. Menjalankan `tests/runner.html` menimpa data aplikasi karena memakai kunci
+   localStorage yang sama, padahal README menyuruh membukanya di origin itu.
+6. Validasi angkatan anggota memakai `Number()` sementara penyimpanannya memakai
+   `parseInt()`, sehingga nilai seperti `2.021e3` lolos lalu tersimpan sebagai 2.
+
+Gelombang perbaikan untuk keenamnya sudah didispatch. Setelah selesai, yang tersisa
+adalah satu re-review tercakup, lalu langkah yang membutuhkan pengguna.
+
+## Yang membutuhkan Anda
+
+- Isi empat penanda slot: tautan Figma publik dan tangkapan layar Stitch di
+  `docs/perancangan.md`, tautan GitHub dan URL Vercel di `README.md`.
+- Dorong ke GitHub dan deploy ke Vercel. Keduanya memakai akun Anda dan keluar dari
+  worktree ini, sehingga tidak dijalankan tanpa permintaan Anda.
