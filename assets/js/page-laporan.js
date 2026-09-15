@@ -63,10 +63,17 @@
     }).join('');
   }
 
-  function renderGrafik() {
+  function warnaGrafik(cetak) {
+    if (cetak === true) return { teks: '#333', garis: '#999' };
+    return {
+      teks: getComputedStyle(document.body).getPropertyValue('--muted').trim(),
+      garis: document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,.10)' : 'rgba(15,23,42,.10)'
+    };
+  }
+
+  function renderGrafik(cetak) {
     var tren = Store.tren();
-    var warnaTeks = getComputedStyle(document.body).getPropertyValue('--muted').trim();
-    var warnaGaris = document.documentElement.classList.contains('dark') ? 'rgba(255,255,255,.10)' : 'rgba(15,23,42,.10)';
+    var warna = warnaGrafik(cetak);
 
     if (grafik) grafik.destroy();
     grafik = new Chart(document.getElementById('grafikLaporan'), {
@@ -80,10 +87,11 @@
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: warnaTeks, usePointStyle: true, boxWidth: 8 } } },
+        animation: cetak === true ? false : undefined,
+        plugins: { legend: { labels: { color: warna.teks, usePointStyle: true, boxWidth: 8 } } },
         scales: {
-          x: { grid: { display: false }, ticks: { color: warnaTeks, maxRotation: 0, autoSkipPadding: 10 } },
-          y: { beginAtZero: true, grid: { color: warnaGaris }, ticks: { color: warnaTeks } }
+          x: { grid: { display: false }, ticks: { color: warna.teks, maxRotation: 0, autoSkipPadding: 10 } },
+          y: { beginAtZero: true, grid: { color: warna.garis }, ticks: { color: warna.teks } }
         }
       }
     });
@@ -125,8 +133,15 @@
 
   document.getElementById('tombolSetelUlang').addEventListener('click', function () { setelUlang(); perbarui(); });
   document.getElementById('tombolCetak').addEventListener('click', function () { window.print(); });
-  window.addEventListener('beforeprint', function () { tabel.setPerHalaman(Math.max(1, tabel.barisTampil().length)); });
-  window.addEventListener('afterprint', function () { tabel.setPerHalaman(PER_HALAMAN); });
+  window.addEventListener('beforeprint', function () {
+    tabel.setPerHalaman(Math.max(1, tabel.barisTampil().length));
+    renderGrafik(true);
+    grafik.resize();
+  });
+  window.addEventListener('afterprint', function () {
+    tabel.setPerHalaman(PER_HALAMAN);
+    renderGrafik();
+  });
   document.addEventListener('temaberubah', renderGrafik);
 
   perbarui();
