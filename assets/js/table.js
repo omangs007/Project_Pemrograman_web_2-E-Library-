@@ -77,7 +77,7 @@ var DataTable = (function () {
 
     function htmlKepala() {
       return '<thead><tr>' + kolom.map(function (k) {
-        var atribut = k.urut ? ' data-urut="' + UI.escapeHtml(k.kunci) + '"' : '';
+        var atribut = k.urut ? ' tabindex="0" data-urut="' + UI.escapeHtml(k.kunci) + '"' : '';
         var aria = (k.urut && kunciUrut === k.kunci)
           ? ' aria-sort="' + (arahUrut === 'naik' ? 'ascending' : 'descending') + '"' : '';
         var penanda = k.urut
@@ -112,6 +112,16 @@ var DataTable = (function () {
     }
 
     function render() {
+      var aktif = typeof document !== 'undefined' ? document.activeElement : null;
+      var fokus = null;
+      if (aktif && mount.contains(aktif)) {
+        if (aktif.matches('th[data-urut]')) {
+          fokus = { selektor: 'th[data-urut]', kunci: aktif.getAttribute('data-urut') };
+        } else if (aktif.matches('.paginasi button[data-hal]')) {
+          // Label nomor dan panah tetap; data-hal panah berubah saat berpindah halaman.
+          fokus = { selektor: '.paginasi button[data-hal]', label: aktif.textContent };
+        }
+      }
       var hasil = hitung();
       if (hasil.length === 0) {
         mount.innerHTML = '<div class="tabel-kosong"><strong>Tidak ada data yang cocok</strong>' +
@@ -121,9 +131,21 @@ var DataTable = (function () {
       mount.innerHTML = '<div class="tabel-bungkus"><table class="tabel">' +
         htmlKepala() + htmlIsi(potong(hasil, halaman, perHalaman)) +
         '</table></div>' + htmlPaginasi(hasil.length);
+      if (fokus) {
+        var calon = mount.querySelectorAll(fokus.selektor);
+        for (var i = 0; i < calon.length; i++) {
+          var cocok = fokus.kunci !== undefined
+            ? calon[i].getAttribute('data-urut') === fokus.kunci
+            : calon[i].textContent === fokus.label;
+          if (cocok) {
+            if (!calon[i].disabled) calon[i].focus();
+            break;
+          }
+        }
+      }
     }
 
-    /* Satu event listener untuk seluruh tabel (delegasi) — tetap bekerja
+    /* Listener pada mount untuk seluruh tabel (delegasi) — tetap bekerja
        setelah isi tabel dirender ulang. */
     mount.addEventListener('click', function (e) {
       var th = e.target.closest && e.target.closest('th[data-urut]');
@@ -138,6 +160,15 @@ var DataTable = (function () {
       if (tombol && mount.contains(tombol) && !tombol.disabled) {
         halaman = parseInt(tombol.getAttribute('data-hal'), 10);
         render();
+      }
+    });
+
+    mount.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var th = e.target.closest && e.target.closest('th[data-urut]');
+      if (th && mount.contains(th)) {
+        e.preventDefault();
+        th.click();
       }
     });
 

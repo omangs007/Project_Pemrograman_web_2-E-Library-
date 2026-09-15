@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard &mdash; E-Library Universitas Pamulang</title>
@@ -27,34 +28,34 @@
         <div class="glass-panel p-6 lg:col-span-2">
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
-              <h3 class="text-lg">Tren Sirkulasi</h3>
-              <p class="text-muted text-sm">Peminjaman 12 bulan terakhir</p>
+              <h3 class="judul-panel">Tren Sirkulasi</h3>
+              <p class="text-muted keterangan-panel">Peminjaman 12 bulan terakhir</p>
             </div>
           </div>
           <div class="grafik-bungkus"><canvas id="grafikTren"></canvas></div>
         </div>
 
         <div class="glass-panel p-6">
-          <h3 class="text-lg mb-1">Komposisi Koleksi</h3>
-          <p class="text-muted text-sm mb-4">Jumlah judul per kategori</p>
+          <h3 class="judul-panel mb-1">Komposisi Koleksi</h3>
+          <p class="text-muted keterangan-panel mb-4">Jumlah judul per kategori</p>
           <div class="grafik-bungkus"><canvas id="grafikKategori"></canvas></div>
         </div>
       </section>
 
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div class="glass-panel p-6">
-          <h3 class="text-lg mb-4">Aktivitas Terbaru</h3>
+          <h3 class="judul-panel mb-4">Aktivitas Terbaru</h3>
           <ul class="linimasa" id="daftarAktivitas"></ul>
         </div>
 
         <div class="glass-panel p-6">
-          <h3 class="text-lg mb-4">Buku Terpopuler</h3>
+          <h3 class="judul-panel mb-4">Buku Terpopuler</h3>
           <ul class="peringkat" id="daftarPopuler"></ul>
         </div>
 
         <div class="glass-panel p-6">
-          <h3 class="text-lg mb-1">Jatuh Tempo</h3>
-          <p class="text-muted text-sm mb-4">Hari ini dan yang sudah terlewat</p>
+          <h3 class="judul-panel mb-1">Jatuh Tempo</h3>
+          <p class="text-muted keterangan-panel mb-4">Hari ini dan yang sudah terlewat</p>
           <ul class="peringkat" id="daftarJatuhTempo"></ul>
         </div>
       </section>
