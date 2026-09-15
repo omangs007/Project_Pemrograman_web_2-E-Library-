@@ -50,10 +50,10 @@ Node di atas.
 | 11 | Data Anggota | Selesai, review bersih |
 | 12 | Peminjaman dan Pengembalian | Selesai, review bersih setelah 1 fix round |
 | 13 | Form Buku | Selesai, review bersih setelah 1 fix round |
-| 14 | Laporan dan stylesheet cetak | **Sedang dikerjakan** |
-| 15 | Modal Pengaturan | Belum mulai |
-| 16 | Dokumentasi Milestone 1 dan README | Belum mulai |
-| 17 | Verifikasi menyeluruh dan deploy | Belum mulai |
+| 14 | Laporan dan stylesheet cetak | Selesai, review bersih setelah 3 fix round |
+| 15 | Modal Pengaturan | Selesai, review bersih setelah 1 fix round |
+| 16 | Dokumentasi Milestone 1 dan README | Fix round 1 berjalan |
+| 17 | Verifikasi menyeluruh dan deploy | **Sedang dikerjakan** — Step 10-12 menunggu pengguna |
 
 Branch: `feat/admin-panel`. Commit terakhir: `8a1a0a5`.
 
