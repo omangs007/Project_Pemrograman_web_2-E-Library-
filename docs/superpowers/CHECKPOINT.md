@@ -1,19 +1,30 @@
-# Checkpoint — 14-15 September 2026
+# Checkpoint — 15 September 2026
 
-Titik henti pengerjaan Admin Panel E-Library Universitas Pamulang. Dokumen ini
-ditulis agar pekerjaan dapat dilanjutkan besok tanpa perlu membaca ulang seluruh
-riwayat percakapan.
+Titik henti Admin Panel E-Library Universitas Pamulang. Ditulis agar pekerjaan dapat
+dilanjutkan besok tanpa membaca ulang riwayat percakapan.
 
-## Cara melanjutkan
+## Ringkas: di mana posisinya
 
-Buka sesi baru di direktori proyek, lalu katakan:
+Kodenya **selesai**. Ketujuh belas task rencana sudah dikerjakan, masing-masing lewat
+gerbang review, lalu review menyeluruh seluruh branch menemukan enam temuan Important
+yang seluruhnya sudah diperbaiki dan diverifikasi ulang. Pekerjaan sudah di-merge ke
+`master` dan **sudah ter-push ke GitHub**.
 
-> Lanjutkan eksekusi `docs/superpowers/plans/2026-09-14-elibrary-admin-panel.md`
-> dari Task 14. Baca `docs/superpowers/CHECKPOINT.md` dan ledger di
-> `.superpowers/sdd/2026-09-14-elibrary-admin-panel/progress.md` lebih dulu.
+Yang tersisa bukan kodenya, melainkan tiga hal yang membutuhkan akun Anda: Figma, Vercel,
+dan Stitch.
 
-Ledger adalah catatan lengkapnya: berisi setiap temuan, setiap keputusan, dan
-setiap hasil verifikasi. Dokumen ini hanya ringkasannya.
+| Hal | Status |
+|---|---|
+| Kode aplikasi, 17 task | Selesai, review bersih |
+| Merge ke `master` | Selesai (`55bde7d`) |
+| Push ke GitHub | Selesai, 42 commit |
+| Dokumentasi Milestone 1 | Selesai, kecuali tautan Figma dan Stitch |
+| Figma — design system | Selesai |
+| Figma — dua layar High-Fidelity | **Belum**, terhenti kuota |
+| Deploy Vercel | **Belum** |
+| Wireframe Stitch | **Belum tersentuh** |
+
+Repositori: <https://github.com/omangs007/Project_Pemrograman_web_2-E-Library->
 
 ## Cara menjalankan aplikasi
 
@@ -21,144 +32,134 @@ setiap hasil verifikasi. Dokumen ini hanya ringkasannya.
 node -e "const http=require('http'),fs=require('fs'),path=require('path'),url=require('url');const root=process.cwd();const MIME={'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml','.md':'text/plain'};http.createServer((req,res)=>{let p=decodeURIComponent(url.parse(req.url).pathname);if(p.endsWith('/'))p+='index.html';const f=path.join(root,p);if(!f.startsWith(root)){res.writeHead(403);return res.end();}fs.readFile(f,(e,d)=>{if(e){res.writeHead(404);return res.end('404');}res.writeHead(200,{'Content-Type':MIME[path.extname(f)]||'application/octet-stream'});res.end(d);});}).listen(8123,'127.0.0.1',()=>console.log('http://127.0.0.1:8123'));"
 ```
 
-Buka `http://127.0.0.1:8123/index.html`. Masuk dengan `admin@unpam.ac.id` /
-`admin123`.
-
-Catatan: `python -m http.server` gagal di mesin ini, karena itu dipakai server
-Node di atas.
+Buka `http://127.0.0.1:8123/index.html`, masuk dengan `admin@unpam.ac.id` / `admin123`.
+`python -m http.server` gagal di mesin ini, karena itu dipakai server Node di atas.
 
 ## Menjalankan pengujian
 
-- Suite utama (60 tes): buka `http://127.0.0.1:8123/tests/runner.html`, atau
-  jalankan di Node dengan stub `localStorage` — lihat pola perintahnya di ledger.
-- Harness sirkulasi: `node tests/page-peminjaman.check.cjs` (6 pemeriksaan).
-
-## Status per task
-
-| Task | Halaman / modul | Status |
+| Suite | Perintah | Jumlah |
 |---|---|---|
-| 1 | Design token, stylesheet glass, design system | Selesai, review bersih |
-| 2 | Seed mock data | Selesai, 1 fix round |
-| 3 | Store localStorage + tes CRUD | Selesai, 1 fix round |
-| 4 | Aturan sirkulasi dan denda | Selesai, 1 fix round |
-| 5 | Perkakas UI (modal, toast, validator) | Selesai, 1 fix round |
-| 6 | Mesin tabel generik | Selesai, 1 fix round |
-| 7 | Kerangka layout — **Milestone 2** | Selesai, 1 fix round |
-| 8 | Halaman login | Selesai, review bersih |
-| 9 | Dashboard | Selesai, review bersih |
-| 10 | Data Buku | Selesai, review bersih |
-| 11 | Data Anggota | Selesai, review bersih |
-| 12 | Peminjaman dan Pengembalian | Selesai, review bersih setelah 1 fix round |
-| 13 | Form Buku | Selesai, review bersih setelah 1 fix round |
-| 14 | Laporan dan stylesheet cetak | Selesai, review bersih setelah 3 fix round |
-| 15 | Modal Pengaturan | Selesai, review bersih setelah 1 fix round |
-| 16 | Dokumentasi Milestone 1 dan README | Selesai, review bersih setelah 1 fix round |
-| 17 | Verifikasi menyeluruh dan deploy | Step 1-9 selesai; Step 10-12 menunggu pengguna |
+| Suite utama | buka `http://127.0.0.1:8123/tests/runner.html` | 60 |
+| Harness sirkulasi | `node tests/page-peminjaman.check.cjs` | 6 |
+| Harness form buku | `node tests/page-form-buku.check.cjs` | 5 |
+| Harness regresi review akhir | `node tests/review-akhir.check.cjs` | 12 |
 
-Branch `feat/admin-panel` sudah di-merge ke `master` dan dihapus. Commit merge: `55bde7d`.
+Seluruhnya hijau pada `master` saat checkpoint ini ditulis. Test runner peramban kini
+memakai penyimpanan terisolasi, jadi menjalankannya tidak lagi menimpa data aplikasi.
 
-## Yang harus dikerjakan berikutnya
-
-Task 12 dan Task 13 sudah SELESAI pada 15 September 2026, keduanya lewat gerbang
-review dengan satu putaran perbaikan. Rinciannya ada di ledger.
-
-Task 12 diperbaiki dengan menambahkan diskriminator `field` pada nilai kembalian
-`bolehPinjam()`, sehingga alasan penolakan yang menyangkut buku ditandai pada
-field Buku, bukan field Anggota. Asersi harness sirkulasi ikut diperbarui karena
-asersi lamanya justru mengunci perilaku yang diperbaiki.
-
-Task 13 diperbaiki karena penyimpanan dapat mengumumkan sukses padahal gagal.
-`tulis()` kini mengembalikan boolean dan halaman memeriksanya lewat
-`Store.simpan()`. Saat gagal di mode tambah, record yang terlanjur masuk ke
-memori dibuang lagi — tanpa itu, percobaan ulang ditolak sebagai duplikat ISBN
-dari record yang belum tersimpan itu sendiri.
-
-Sisa pekerjaan: Task 14 (Laporan dan stylesheet cetak), Task 15 (Modal
-Pengaturan), Task 16 (Dokumentasi Milestone 1 dan README), Task 17 (verifikasi
-menyeluruh dan deploy), lalu review menyeluruh seluruh branch.
-
-## Cakupan tes otomatis saat ini
-
-- Suite utama: 60 tes.
-- Harness sirkulasi: `node tests/page-peminjaman.check.cjs` (6 pemeriksaan).
-- Harness form buku: `node tests/page-form-buku.check.cjs` (5 pemeriksaan) — baru
-  di Task 13; menutup gagal dan berhasil untuk mode tambah maupun ubah, ditambah
-  percobaan ulang setelah penyimpanan gagal.
-
-## Hal yang perlu diingat saat melanjutkan
-
-**Codex tidak bisa menulis ke `.git`.** Sandbox-nya menolak, jadi controller yang
-menjalankan setiap `git commit`. Jangan minta Codex melakukan operasi git.
-
-**Codex tidak punya peramban.** Seluruh verifikasi visual dan interaksi dilakukan
-controller lewat Playwright. Minta Codex menyatakan dengan jujur apa yang tidak
-bisa ia verifikasi, jangan biarkan ia mengklaim sebaliknya.
-
-**Model Codex yang valid** adalah `gpt-5.6-sol` dan `gpt-6-astra`. Varian dengan
-sisipan `-codex-` ditolak CLI.
-
-**Aturan warna yang berulang kali menjadi sumber cacat:** token tema untuk
-permukaan, border, dan teks isi; nilai literal untuk warna yang membawa makna.
-Satu task pernah ditolak karena mengganti indikator galat dengan `var(--text)`,
-yang membuatnya ter-render tanpa warna merah sama sekali.
-
-**Jangan menyimpan referensi elemen tabel melintasi aksi yang memicu render**,
-karena `DataTable` menulis ulang seluruh `innerHTML`-nya dan node lama terlepas
-dari DOM. Query ulang setiap kali. Kesalahan ini pernah membuat uji asap salah
-melaporkan pengurutan tidak bekerja.
-
-**Tangkapan layar `fullPage` Playwright menyesatkan** pada halaman ini karena
-`background-attachment: fixed`; panel bawah tampak putih polos padahal normal.
-Gunakan tangkapan per-viewport.
-
-## Yang masih harus Anda kerjakan sendiri
-
-Milestone 1 mensyaratkan **link publik Figma** dan hasil rancangan **Stitch by
-Google**. Keduanya butuh akun pribadi Anda. Task 16 akan menyediakan slot
-`[LINK FIGMA ANDA]` dan `[SCREENSHOT STITCH]` di `docs/perancangan.md` untuk
-diisi, serta `docs/design-system.html` yang bisa dibuka dan ditangkap layarnya
-sebagai sumber nilai warna dan tipografi.
-
-Task 17 juga akan meminta link repositori GitHub dan URL deploy Vercel Anda.
-
-## Temuan yang ditunda ke review akhir
-
-Ledger mencatat 25 temuan Minor dan beberapa observasi yang sengaja tidak masuk
-fix loop. Review menyeluruh di akhir akan mentriase mana yang harus diperbaiki
-sebelum penyerahan. Yang paling menonjol:
-
-- `create()` dan `update()` pada Store mengembalikan objek hidup, bukan salinan —
-  kelas bug yang sama dengan yang sudah diperbaiki pada `find()` dan `all()`,
-  hanya lewat jalur tulis. Belum ada konsumen yang memutasinya.
-- Menghapus atau mengedit baris melempar tampilan kembali ke halaman 1 alih-alih
-  bertahan di sekitar posisi semula.
-- Pengurutan kolom hanya bisa lewat tetikus; `<th>` belum bisa difokuskan
-  keyboard.
-
-## Status gerbang akhir — 15 September 2026
-
-Ketujuh belas task selesai dan seluruhnya melewati gerbang review per-task. Review
-menyeluruh seluruh branch menghasilkan enam temuan Important; keenamnya sudah
-diperbaiki, diverifikasi controller di peramban, dan dinyatakan DITUTUP oleh
-re-review tercakup. Laporan review akhir ada di
-`.superpowers/sdd/2026-09-14-elibrary-admin-panel/review-akhir.md`.
-
-Pekerjaan sudah di-merge ke `master` sebagai `55bde7d`, dan seluruh tes hijau pada
-hasil merge itu: suite utama 60/60, harness sirkulasi 6/6, harness form buku 5/5,
-harness regresi review akhir 12/12.
-
-Seluruh 38 keputusan yang diambil controller tanpa menunggu jawaban pengguna
-tercatat di `docs/keputusan-controller.md`, beserta alasan dan biayanya bila keliru.
+---
 
 ## Yang membutuhkan Anda
 
-Repositori ini BELUM punya remote. Tiga langkah terakhir Task 17 menunggu Anda:
+### 1. Figma — dua layar High-Fidelity
 
-1. Isi empat penanda slot: tautan Figma publik dan tangkapan layar Stitch di
-   `docs/perancangan.md`, tautan GitHub dan URL Vercel di `README.md`.
-2. Tambahkan remote GitHub lalu dorong `master` ke sana.
-3. Deploy ke Vercel dan isi URL-nya.
+File sudah dibuat dan design system-nya sudah berdiri:
+<https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux>
 
-Daftar periksa di `docs/perancangan.md` menyebutkan syarat penilaian yang mudah
-terlewat: tautan Figma harus publik dan dapat dibuka penilai tanpa meminta akses,
-dan High-Fidelity UI wajib untuk DUA halaman yaitu Dashboard dan Data Master.
+**Sudah jadi** di halaman `Design System`:
+
+- 4 collection, 66 variable, seluruhnya ber-scope eksplisit dan ber-code-syntax memakai
+  nama CSS asli dari kode (`var(--glass)`, `var(--muted)`, `var(--bg-a)`)
+- 10 text style, 3 effect style
+- 14 swatch warna semantik, spesimen tipografi, skala spasi dan radius
+- 4 component set: `Button`, `Input`, `Badge`, `Card`
+
+**Belum jadi:** halaman `Dashboard` dan `Data Buku` masih kosong. Keduanya adalah
+High-Fidelity UI yang diminta Milestone 1.
+
+**Satu cacat yang perlu diperbaiki:** properti TEXT pada tiga component set menimpa teks
+tiap varian, sehingga ketiga Button bertuliskan "Hapus", ketiga Input "123", dan ketiga
+Badge "Terlambat 13 hari". Badge hijau dan kuning karena itu salah makna. Cara
+memperbaikinya beserta daftar teks yang benar ada di `docs/panduan-rakit-figma.md`.
+
+**Kenapa berhenti:** kuota panggilan MCP Figma paket Starter habis. Paket itu membatasi
+tiga hal sekaligus, dan ketiganya sempat mengubah rencana:
+
+| Batasan Starter | Dampak |
+|---|---|
+| Variable dibatasi 1 mode | Light/Dark tidak bisa jadi mode variable; token diikat ke tema gelap |
+| Maksimal 3 halaman | Rencana 10 halaman dipadatkan jadi Design System + dua layar |
+| 20 panggilan MCP per bulan | Menghentikan pekerjaan; reset bulanan |
+
+**Salah paham yang sudah terjawab:** field **Role: Education** di pengaturan akun Figma
+BUKAN paket Education — itu hanya isian profesi. Paket Education diajukan terpisah lewat
+figma.com/education dan butuh bukti status mahasiswa. Tanda paketnya sudah aktif: badge
+di dekat Drafts tidak lagi bertuliskan **Free**, dan bagian **Your spaces** berisi space
+Education. Sebelum kedua tanda itu muncul, `whoami` akan tetap melaporkan `starter`.
+
+Autentikasi ulang MCP **tidak** memperbaiki ini; sudah dicoba empat kali dengan hasil
+identik, termasuk setelah autentikasi dibersihkan total.
+
+**Dua jalan ke depan.** Kalau paketnya nanti aktif, minta agen melanjutkan — state
+lengkapnya tersimpan di scratchpad sesi (`ds-state.json`) berisi ID tiap component set,
+sehingga design system tidak perlu diulang. Kalau tenggatnya dekat, rakit sendiri kedua
+layar memakai `docs/panduan-rakit-figma.md`, yang memuat nilai layout persis dari
+`style.css` dan isi tabel dari seed aplikasi.
+
+Setelah selesai, **setel sharing file ke "Anyone with the link"** lalu isi slot
+`[LINK FIGMA ANDA]` di `docs/perancangan.md`. Tautan yang tidak publik akan gagal dibuka
+penilai.
+
+### 2. Deploy Vercel
+
+Belum dikerjakan. Setelah live, isi slot `[LINK VERCEL ANDA]` di `README.md`.
+
+### 3. Wireframe dan user flow di Stitch
+
+Belum tersentuh sama sekali, dan ini terpisah dari pekerjaan Figma. Panduan tugas
+memintanya untuk Milestone 1. Slotnya `[SCREENSHOT STITCH]` di `docs/perancangan.md`.
+
+### 4. Pertimbangkan identitas commit
+
+Seluruh 42 commit tercatat atas nama akun lain, sementara repositorinya milik
+`omangs007`. Push berhasil, jadi aksesnya tidak bermasalah — tetapi kontribusinya tidak
+akan tertaut ke profil `omangs007` di halaman repo. Bila penilai memeriksa riwayat commit,
+ini bisa menimbulkan pertanyaan. Mengubahnya berarti menulis ulang seluruh riwayat, jadi
+keputusannya di Anda.
+
+---
+
+## Hal yang perlu diingat saat melanjutkan
+
+**Git di mesin ini.** Config global menyetel `credential.helper = cache`, helper gaya
+Linux yang tidak berfungsi di Windows dan memunculkan galat "unable to connect to cache
+daemon". Repo ini sudah dialihkan ke `manager` lewat config **lokal**; setelan global
+sengaja tidak disentuh. Peringatan cache daemon masih muncul sekali tiap push tetapi tidak
+berpengaruh. Repositori lain di mesin ini masih akan mengalami masalah yang sama.
+
+**Codex berbagi satu antrean.** Hanya satu job berjalan pada satu waktu. Dispatch baru
+mengantre dengan selamat, tetapi `--resume` gagal cepat bila masih ada job lain berjalan.
+
+**Agen forwarder yang tampak gagal belum tentu berhenti.** Satu gelombang perbaikan pernah
+hidup kembali dan berjalan bersamaan dengan kiriman ulangnya, nyaris menerapkan enam
+perbaikan dua kali ke berkas yang sama. Sebelum mengirim ulang pekerjaan yang MENULIS,
+pastikan job lama benar-benar mati lewat daftar proses, bukan lewat berkas status —
+berkas status terbukti basi setelah proses dimatikan paksa.
+
+**Aturan warna yang berulang menjadi sumber cacat:** token tema untuk permukaan, border,
+dan teks isi; nilai literal untuk warna yang membawa makna. Di blok cetak, hasil akhirnya
+harus hitam di atas putih.
+
+**Mengukur kontras harus memakai warna komposit.** Latar aplikasi ini gradien, sehingga
+`backgroundColor` bernilai transparan di kedua tema; dan tint badge beralfa 0,16. Mengukur
+langsung terhadap keduanya menghasilkan angka palsu. Rasio tepat 1,00 atau pola "semuanya
+gagal" hampir selalu berarti alat ukurnya yang salah, bukan produknya.
+
+**Tangkapan layar `fullPage` Playwright menyesatkan** pada halaman ini karena
+`background-attachment: fixed`. Gunakan tangkapan per-viewport.
+
+**Jangan menyimpan referensi elemen tabel melintasi aksi yang memicu render** — `DataTable`
+menulis ulang seluruh `innerHTML`-nya. Query ulang setiap kali.
+
+---
+
+## Dokumen penting
+
+| Berkas | Isi |
+|---|---|
+| `docs/perancangan.md` | Keluaran Milestone 1: hirarki menu, ER-D, user flow, design system |
+| `README.md` | Cara menjalankan, struktur, kredensial demo, cara menguji |
+| `docs/panduan-rakit-figma.md` | Panduan merakit dua layar High-Fidelity, nilai layout persis dari kode |
+| `docs/keputusan-controller.md` | 38 keputusan yang diambil tanpa menunggu jawaban, beserta alasan dan biayanya bila keliru |
+| `.superpowers/sdd/2026-09-14-elibrary-admin-panel/progress.md` | Ledger lengkap eksekusi; git-ignored |
+| `.superpowers/sdd/2026-09-14-elibrary-admin-panel/review-akhir.md` | Laporan review menyeluruh seluruh branch |
