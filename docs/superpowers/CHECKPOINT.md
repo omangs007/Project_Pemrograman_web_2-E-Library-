@@ -1,4 +1,4 @@
-# Checkpoint — 14 September 2026
+# Checkpoint — 14-15 September 2026
 
 Titik henti pengerjaan Admin Panel E-Library Universitas Pamulang. Dokumen ini
 ditulis agar pekerjaan dapat dilanjutkan besok tanpa perlu membaca ulang seluruh
@@ -9,7 +9,7 @@ riwayat percakapan.
 Buka sesi baru di direktori proyek, lalu katakan:
 
 > Lanjutkan eksekusi `docs/superpowers/plans/2026-09-14-elibrary-admin-panel.md`
-> dari Task 13. Baca `docs/superpowers/CHECKPOINT.md` dan ledger di
+> dari Task 14. Baca `docs/superpowers/CHECKPOINT.md` dan ledger di
 > `.superpowers/sdd/2026-09-14-elibrary-admin-panel/progress.md` lebih dulu.
 
 Ledger adalah catatan lengkapnya: berisi setiap temuan, setiap keputusan, dan
@@ -48,48 +48,42 @@ Node di atas.
 | 9 | Dashboard | Selesai, review bersih |
 | 10 | Data Buku | Selesai, review bersih |
 | 11 | Data Anggota | Selesai, review bersih |
-| 12 | Peminjaman dan Pengembalian | Selesai, 1 temuan menunggu perbaikan |
-| 13 | Form Buku | **WIP — belum diverifikasi, belum di-review** |
-| 14 | Laporan dan stylesheet cetak | Belum mulai |
+| 12 | Peminjaman dan Pengembalian | Selesai, review bersih setelah 1 fix round |
+| 13 | Form Buku | Selesai, review bersih setelah 1 fix round |
+| 14 | Laporan dan stylesheet cetak | **Sedang dikerjakan** |
 | 15 | Modal Pengaturan | Belum mulai |
 | 16 | Dokumentasi Milestone 1 dan README | Belum mulai |
 | 17 | Verifikasi menyeluruh dan deploy | Belum mulai |
 
-Branch: `feat/admin-panel`. Commit terakhir: `82fca3e`.
+Branch: `feat/admin-panel`. Commit terakhir: `8a1a0a5`.
 
-## Yang harus dikerjakan pertama besok
+## Yang harus dikerjakan berikutnya
 
-### 1. Perbaikan tertunda dari Task 12
+Task 12 dan Task 13 sudah SELESAI pada 15 September 2026, keduanya lewat gerbang
+review dengan satu putaran perbaikan. Rinciannya ada di ledger.
 
-Reviewer menemukan bahwa `bolehPinjam()` memiliki lima cabang penolakan, dua di
-antaranya menyangkut **buku** — "Buku tidak ditemukan" dan "Stok … sedang habis"
-— tetapi `assets/js/page-peminjaman.js` selalu menempelkan alasannya ke field
-**Anggota**. Pustakawan yang melihat pesan "Stok habis" di bawah label Anggota
-akan memeriksa kontrol yang salah.
+Task 12 diperbaiki dengan menambahkan diskriminator `field` pada nilai kembalian
+`bolehPinjam()`, sehingga alasan penolakan yang menyangkut buku ditandai pada
+field Buku, bukan field Anggota. Asersi harness sirkulasi ikut diperbarui karena
+asersi lamanya justru mengunci perilaku yang diperbaiki.
 
-Keputusan yang sudah diambil: tambahkan diskriminator `field: 'anggota' | 'buku'`
-pada nilai kembalian `bolehPinjam()` di `assets/js/store.js`, lalu gunakan itu di
-halaman untuk menandai input yang tepat. Jangan menebak field dari isi pesan —
-pendekatan itu rapuh terhadap perubahan kata. Penambahan properti bersifat aditif
-sehingga tes yang memeriksa `.boleh` dan `.alasan` tidak terpengaruh.
+Task 13 diperbaiki karena penyimpanan dapat mengumumkan sukses padahal gagal.
+`tulis()` kini mengembalikan boolean dan halaman memeriksanya lewat
+`Store.simpan()`. Saat gagal di mode tambah, record yang terlanjur masuk ke
+memori dibuang lagi — tanpa itu, percobaan ulang ditolak sebagai duplikat ISBN
+dari record yang belum tersimpan itu sendiri.
 
-### 2. Selesaikan Task 13
+Sisa pekerjaan: Task 14 (Laporan dan stylesheet cetak), Task 15 (Modal
+Pengaturan), Task 16 (Dokumentasi Milestone 1 dan README), Task 17 (verifikasi
+menyeluruh dan deploy), lalu review menyeluruh seluruh branch.
 
-Berkasnya sudah ada di disk dan lolos pemeriksaan sintaks, tetapi belum pernah
-dibuka di peramban dan belum melewati gerbang review. Perlakukan sebagai draf.
+## Cakupan tes otomatis saat ini
 
-Yang harus diverifikasi di peramban, karena semuanya jenis kesalahan yang tidak
-memunculkan pesan galat:
-
-- Mengedit buku yang punya sampul, tanpa menyentuh input sampul, tidak boleh
-  mengosongkan sampulnya.
-- Konvensi "jumlah tersedia mengikuti jumlah total" hanya berlaku saat menambah
-  buku baru. Bila ikut berjalan di mode ubah, mengedit buku akan diam-diam
-  mereset stok tersedia ke total dan menggelembungkan stok buku yang sedang
-  dipinjam orang.
-- Pemeriksaan ISBN duplikat harus mengecualikan record yang sedang diedit.
-- ISBN dinormalisasi sebelum dibandingkan maupun disimpan, sehingga
-  `978-602-033-212-3` dan `9786020332123` dikenali sebagai ISBN yang sama.
+- Suite utama: 60 tes.
+- Harness sirkulasi: `node tests/page-peminjaman.check.cjs` (6 pemeriksaan).
+- Harness form buku: `node tests/page-form-buku.check.cjs` (5 pemeriksaan) — baru
+  di Task 13; menutup gagal dan berhasil untuk mode tambah maupun ubah, ditambah
+  percobaan ulang setelah penyimpanan gagal.
 
 ## Hal yang perlu diingat saat melanjutkan
 
