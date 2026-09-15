@@ -2,6 +2,7 @@
    event 'bukapengaturan' dari sidebar — tidak perlu halaman tersendiri. */
 (function () {
   document.addEventListener('bukapengaturan', function () {
+    if (document.getElementById('aturTema')) return;
     var petugas = Layout.sesi() || { nama: '-', email: '-', role: '-' };
     var gelap = document.documentElement.classList.contains('dark');
 
