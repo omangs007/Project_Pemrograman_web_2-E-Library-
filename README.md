@@ -132,7 +132,7 @@ dikumpulkan tanpa proses build maupun paket npm; Node.js di atas hanya melayani 
 
 ## Demo
 
-- **Repositori:** [LINK GITHUB ANDA]
+- **Repositori:** <https://github.com/omangs007/Project_Pemrograman_web_2-E-Library->
 - **Demo langsung:** [LINK VERCEL ANDA]
 
 Ganti penanda repositori dengan tautan GitHub milik Anda dan penanda demo dengan URL deploy Vercel setelah Task 17 selesai.
