@@ -167,15 +167,15 @@ var Store = (function () {
 
   function bolehPinjam(idAnggota, idBuku) {
     var a = pastikan().anggota.find(function (x) { return x.id === idAnggota; });
-    if (!a) return { boleh: false, alasan: 'Anggota tidak ditemukan.' };
-    if (a.status !== 'Aktif') return { boleh: false, alasan: 'Keanggotaan ' + a.nama + ' berstatus ' + a.status + '.' };
+    if (!a) return { boleh: false, alasan: 'Anggota tidak ditemukan.', field: 'anggota' };
+    if (a.status !== 'Aktif') return { boleh: false, alasan: 'Keanggotaan ' + a.nama + ' berstatus ' + a.status + '.', field: 'anggota' };
     if (jumlahPinjamanAktif(idAnggota) >= MAKS_PINJAM) {
-      return { boleh: false, alasan: a.nama + ' sudah meminjam ' + MAKS_PINJAM + ' buku (batas maksimal).' };
+      return { boleh: false, alasan: a.nama + ' sudah meminjam ' + MAKS_PINJAM + ' buku (batas maksimal).', field: 'anggota' };
     }
     var b = pastikan().buku.find(function (x) { return x.id === idBuku; });
-    if (!b) return { boleh: false, alasan: 'Buku tidak ditemukan.' };
-    if (b.jumlahTersedia < 1) return { boleh: false, alasan: 'Stok "' + b.judul + '" sedang habis.' };
-    return { boleh: true, alasan: '' };
+    if (!b) return { boleh: false, alasan: 'Buku tidak ditemukan.', field: 'buku' };
+    if (b.jumlahTersedia < 1) return { boleh: false, alasan: 'Stok "' + b.judul + '" sedang habis.', field: 'buku' };
+    return { boleh: true, alasan: '', field: null };
   }
 
   function catatPeminjaman(opsi) {

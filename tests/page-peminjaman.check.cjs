@@ -175,7 +175,8 @@ check('new loan: live seven-day due date, required fields, blocked/limit/stock r
   form.idAnggota.value = 'AG014';
   S.buku.update('BK003', { jumlahTersedia: 0 });
   assert.equal(modal.onKonfirmasi(), false);
-  assert.match(form.idAnggota.parentElement.querySelector('.field-error').textContent, /habis/);
+  assert.match(form.idBuku.parentElement.querySelector('.field-error').textContent, /habis/);
+  assert.equal(form.idAnggota.parentElement.querySelector('.field-error'), null);
   S.buku.update('BK003', { jumlahTersedia: 2 });
   assert.equal(modal.onKonfirmasi(), true);
   const loan = S.peminjaman.all().at(-1);

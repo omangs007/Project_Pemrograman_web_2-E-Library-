@@ -181,7 +181,7 @@
         if (!UI.validateForm(form, skema).valid) return false;
 
         var cek = R.bolehPinjam(form.idAnggota.value, form.idBuku.value);
-        if (!cek.boleh) { UI.tandaiGalat(form.idAnggota, cek.alasan); return false; }
+        if (!cek.boleh) { UI.tandaiGalat(cek.field === 'buku' ? form.idBuku : form.idAnggota, cek.alasan); return false; }
 
         var p = R.catatPeminjaman({
           idAnggota: form.idAnggota.value,
