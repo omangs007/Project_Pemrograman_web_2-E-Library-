@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tes — E-Library</title>
+<style>
+  body { font-family: ui-monospace, Consolas, monospace; background: #0B1020; color: #F8FAFC; padding: 24px; }
+  h1 { font-size: 18px; } h2 { font-size: 16px; color: #818CF8; }
+  ul { list-style: none; padding-left: 0; } small { color: #94A3B8; }
+</style>
+</head>
+<body>
+<h1>Tes Logika E-Library &mdash; Universitas Pamulang</h1>
+<div id="hasil">Menjalankan&hellip;</div>
+
+<script>
+/* Isolasi sebelum skrip produksi dimuat: tidak membaca atau menulis
+   localStorage aplikasi, bahkan ketika tes memanggil Store.reset(). */
+(function () {
+  var data = Object.create(null);
+  var memoryStorage = {
+    getItem: function (key) {
+      key = String(key);
+      return Object.prototype.hasOwnProperty.call(data, key) ? data[key] : null;
+    },
+    setItem: function (key, value) { data[String(key)] = String(value); },
+    removeItem: function (key) { delete data[String(key)]; },
+    clear: function () { data = Object.create(null); },
+    key: function (index) { return Object.keys(data)[index] || null; }
+  };
+  Object.defineProperty(memoryStorage, 'length', { get: function () { return Object.keys(data).length; } });
+  Object.defineProperty(window, 'localStorage', { value: memoryStorage });
+})();
+</script>
+<script src="assert.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/table.js"></script>
+
+<script src="store.test.js"></script>
+<script src="rules.test.js"></script>
+<script src="ui.test.js"></script>
+<script src="table.test.js"></script>
+
+<script>T.run(document.getElementById('hasil'));</script>
+</body>
+</html>

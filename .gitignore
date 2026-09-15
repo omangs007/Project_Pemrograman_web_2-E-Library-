@@ -14,3 +14,10 @@ node_modules/
 # Berkas sementara
 *.log
 *.tmp
+
+# Workspace SDD (scratch, bukan bagian proyek)
+.superpowers/
+
+# Artefak alat bantu (bukan bagian proyek)
+.playwright-mcp/
+ds-*.png

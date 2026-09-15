@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Buku &mdash; E-Library Universitas Pamulang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/config.js"></script>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="app-bg">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasi utama"></aside>
+
+  <div class="area-utama">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="konten">
+      <form id="formBuku" class="glass-strong overflow-hidden max-w-4xl" novalidate>
+
+        <div class="form-bagian">
+          <h3>Informasi Bibliografi</h3>
+          <p class="keterangan">Identitas utama buku sesuai halaman judul dan halaman hak cipta.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2">
+              <label class="field-label" for="judul">Judul Buku</label>
+              <input class="glass-input" id="judul" name="judul" placeholder="Contoh: Algoritma dan Struktur Data">
+            </div>
+            <div>
+              <label class="field-label" for="pengarang">Pengarang</label>
+              <input class="glass-input" id="pengarang" name="pengarang" placeholder="Nama penulis utama">
+            </div>
+            <div>
+              <label class="field-label" for="penerbit">Penerbit</label>
+              <input class="glass-input" id="penerbit" name="penerbit" placeholder="Nama penerbit">
+            </div>
+            <div>
+              <label class="field-label" for="isbn">ISBN</label>
+              <input class="glass-input" id="isbn" name="isbn" inputmode="numeric" placeholder="10 atau 13 digit">
+            </div>
+            <div>
+              <label class="field-label" for="tahunTerbit">Tahun Terbit</label>
+              <input class="glass-input" id="tahunTerbit" name="tahunTerbit" inputmode="numeric" placeholder="Contoh: 2022">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="field-label" for="sinopsis">Sinopsis Singkat <span class="text-muted">(opsional)</span></label>
+              <textarea class="glass-textarea" id="sinopsis" name="sinopsis" rows="3" placeholder="Ringkasan isi buku dalam beberapa kalimat"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-bagian">
+          <h3>Klasifikasi dan Lokasi</h3>
+          <p class="keterangan">Penempatan buku menurut klasifikasi DDC dan posisi fisiknya di rak.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label" for="idKategori">Kategori</label>
+              <select class="glass-select" id="idKategori" name="idKategori"><option value="">Pilih kategori</option></select>
+            </div>
+            <div>
+              <label class="field-label" for="lokasiRak">Lokasi Rak</label>
+              <input class="glass-input" id="lokasiRak" name="lokasiRak" placeholder="Contoh: R-07-A">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-bagian">
+          <h3>Ketersediaan Stok</h3>
+          <p class="keterangan">Jumlah tersedia tidak boleh melebihi jumlah total eksemplar.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label" for="jumlahTotal">Jumlah Total Eksemplar</label>
+              <input class="glass-input" id="jumlahTotal" name="jumlahTotal" inputmode="numeric" placeholder="Contoh: 5">
+            </div>
+            <div>
+              <label class="field-label" for="jumlahTersedia">Jumlah Tersedia</label>
+              <input class="glass-input" id="jumlahTersedia" name="jumlahTersedia" inputmode="numeric" placeholder="Contoh: 5">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-bagian">
+          <h3>Sampul Buku</h3>
+          <p class="keterangan">Opsional. Gambar hanya dipratinjau di peramban, tidak diunggah ke server mana pun.</p>
+          <div class="sampul-area">
+            <div class="sampul-pratinjau" id="pratinjauSampul">Belum ada sampul</div>
+            <div class="flex-1 min-w-[200px] space-y-3">
+              <div>
+                <label class="field-label" for="berkasSampul">Pilih Sampul</label>
+                <input class="glass-input" type="file" id="berkasSampul" name="berkasSampul" accept="image/png,image/jpeg,image/webp" aria-describedby="petunjukSampul">
+                <p class="keterangan" id="petunjukSampul">PNG, JPEG, atau WebP. Maksimal 1 MB.</p>
+              </div>
+              <button type="button" class="btn btn-ghost" id="hapusSampul">Hapus Sampul</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-aksi">
+          <a class="btn btn-ghost" href="data-buku.html">Batal</a>
+          <button type="submit" class="btn btn-primary" id="tombolSimpan">Simpan Buku</button>
+        </div>
+
+      </form>
+    </main>
+
+    <footer class="footer-app">
+      Sistem Informasi Perpustakaan Digital &mdash; Universitas Pamulang &copy; 2026
+    </footer>
+  </div>
+</div>
+
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/table.js"></script>
+<script src="../assets/js/layout.js"></script>
+<script src="../assets/js/page-pengaturan.js"></script>
+<script src="../assets/js/page-form-buku.js"></script>
+</body>
+</html>

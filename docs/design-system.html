@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — E-Library Universitas Pamulang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/config.js"></script>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="app-bg">
+<div class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+
+  <header class="flex items-center justify-between flex-wrap gap-4">
+    <div>
+      <h1 class="text-3xl">Design System</h1>
+      <p class="text-muted mt-1">E-Library &mdash; Universitas Pamulang</p>
+    </div>
+    <button id="toggleTema" class="btn btn-ghost">Ganti Mode</button>
+  </header>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Warna Aksen</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="swatchAksen"></div>
+  </section>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Permukaan</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="glass-card p-5"><p class="font-semibold">glass-card</p><p class="text-muted text-sm mt-1">blur 20px &middot; radius 16px</p></div>
+      <div class="glass-panel p-5"><p class="font-semibold">glass-panel</p><p class="text-muted text-sm mt-1">blur 32px &middot; radius 24px</p></div>
+      <div class="glass-strong p-5"><p class="font-semibold">glass-strong</p><p class="text-muted text-sm mt-1">untuk tabel data</p></div>
+    </div>
+  </section>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Tipografi</h2>
+    <p style="font-size:40px" class="font-display font-bold">40 &middot; Plus Jakarta Sans</p>
+    <p style="font-size:32px" class="font-display font-bold">32 &middot; Plus Jakarta Sans</p>
+    <p style="font-size:24px" class="font-display font-bold">24 &middot; Plus Jakarta Sans</p>
+    <p style="font-size:20px" class="font-display font-bold">20 &middot; Plus Jakarta Sans</p>
+    <p style="font-size:16px">16 &middot; Inter &mdash; teks isi</p>
+    <p style="font-size:14px">14 &middot; Inter &mdash; teks tabel</p>
+    <p style="font-size:12px" class="text-muted">12 &middot; Inter &mdash; keterangan</p>
+    <p class="stat-value mt-4">1.284</p>
+    <p class="text-muted text-sm">Angka statistik &mdash; tabular-nums</p>
+  </section>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Tombol</h2>
+    <div class="flex flex-wrap gap-3">
+      <button class="btn btn-primary">Tombol Utama</button>
+      <button class="btn btn-ghost">Tombol Sekunder</button>
+      <button class="btn btn-danger">Hapus</button>
+    </div>
+  </section>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Lencana &amp; Chip</h2>
+    <div class="flex flex-wrap gap-3">
+      <span class="badge badge-ok">Tersedia</span>
+      <span class="badge badge-warn">Jatuh Tempo</span>
+      <span class="badge badge-bad">Terlambat</span>
+      <span class="badge badge-muted">Nonaktif</span>
+      <span class="chip">Teknologi</span>
+    </div>
+  </section>
+
+  <section class="glass-panel p-6">
+    <h2 class="text-xl mb-4">Kontrol Form</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <label class="field-label" for="c1">Judul Buku</label>
+        <input id="c1" class="glass-input" placeholder="Masukkan judul">
+      </div>
+      <div>
+        <label class="field-label" for="c2">ISBN (contoh galat)</label>
+        <input id="c2" class="glass-input" aria-invalid="true" value="123">
+        <span class="field-error">ISBN harus terdiri dari 10 atau 13 digit.</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="../assets/js/layout.js"></script>
+<script>
+  Layout.initTheme();
+  document.getElementById('toggleTema').addEventListener('click', Layout.toggleTheme);
+
+  const AKSEN = [
+    ['brand / primary', '#6366F1', 'Aksi utama, menu aktif'],
+    ['ok / success',    '#14B8A6', 'Tersedia, aktif, tepat waktu'],
+    ['warn / warning',  '#F59E0B', 'Mendekati jatuh tempo'],
+    ['bad / danger',    '#F43F5E', 'Terlambat, hapus, galat']
+  ];
+  document.getElementById('swatchAksen').innerHTML = AKSEN.map(function (s) {
+    return '<div class="glass-card overflow-hidden">' +
+             '<div style="height:72px;background:' + s[1] + '"></div>' +
+             '<div class="p-3">' +
+               '<p class="font-semibold text-sm">' + s[0] + '</p>' +
+               '<p class="text-muted text-xs tabular">' + s[1] + '</p>' +
+               '<p class="text-muted text-xs mt-1">' + s[2] + '</p>' +
+             '</div>' +
+           '</div>';
+  }).join('');
+</script>
+</body>
+</html>
