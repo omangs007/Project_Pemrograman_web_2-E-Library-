@@ -13,6 +13,25 @@
 <h1>Tes Logika E-Library &mdash; Universitas Pamulang</h1>
 <div id="hasil">Menjalankan&hellip;</div>
 
+<script>
+/* Isolasi sebelum skrip produksi dimuat: tidak membaca atau menulis
+   localStorage aplikasi, bahkan ketika tes memanggil Store.reset(). */
+(function () {
+  var data = Object.create(null);
+  var memoryStorage = {
+    getItem: function (key) {
+      key = String(key);
+      return Object.prototype.hasOwnProperty.call(data, key) ? data[key] : null;
+    },
+    setItem: function (key, value) { data[String(key)] = String(value); },
+    removeItem: function (key) { delete data[String(key)]; },
+    clear: function () { data = Object.create(null); },
+    key: function (index) { return Object.keys(data)[index] || null; }
+  };
+  Object.defineProperty(memoryStorage, 'length', { get: function () { return Object.keys(data).length; } });
+  Object.defineProperty(window, 'localStorage', { value: memoryStorage });
+})();
+</script>
 <script src="assert.js"></script>
 <script src="../assets/js/data.js"></script>
 <script src="../assets/js/store.js"></script>

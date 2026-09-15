@@ -96,21 +96,35 @@
     var buku = Store.buku.find(id);
     if (!buku) return;
 
-    var sedangDipinjam = buku.jumlahTotal - buku.jumlahTersedia;
+    var sedangDipinjam = Store.rules.jumlahBukuDipinjam(id);
     if (sedangDipinjam > 0) {
-      UI.toast('"' + buku.judul + '" masih dipinjam ' + sedangDipinjam + ' anggota dan tidak dapat dihapus.', 'bad');
+      UI.toast('"' + buku.judul + '" masih dipinjam sebanyak ' + sedangDipinjam + ' eksemplar dan tidak dapat dihapus.', 'bad');
       return;
     }
 
-    UI.konfirmasi({
+    var detail = Store.detail.all();
+    var riwayat = Store.peminjaman.all().filter(function (p) {
+      return detail.some(function (d) { return d.idPinjam === p.id && d.idBuku === id; });
+    }).length;
+    if (riwayat > 0) {
+      UI.toast('"' + buku.judul + '" masih tercatat pada ' + riwayat + ' transaksi riwayat sehingga tidak dapat dihapus.', 'bad');
+      return;
+    }
+
+    UI.modal({
       judul: 'Hapus Buku',
-      pesan: 'Hapus "' + buku.judul + '" karya ' + buku.pengarang + ' dari koleksi? Tindakan ini tidak dapat dibatalkan.',
-      konfirmasi: 'Ya, Hapus'
-    }).then(function (ya) {
-      if (!ya) return;
-      if (!Store.buku.remove(id)) return;
-      tabel.setBaris(siapkanBaris());
-      UI.toast('Buku "' + buku.judul + '" telah dihapus.', 'ok');
+      isiHtml: '<p>' + UI.escapeHtml('Hapus "' + buku.judul + '" karya ' + buku.pengarang + ' dari koleksi? Tindakan ini tidak dapat dibatalkan.') + '</p>',
+      konfirmasi: 'Ya, Hapus',
+      nada: 'bad',
+      onKonfirmasi: function () {
+        if (!Store.buku.remove(id)) {
+          UI.toast('Buku gagal dihapus. Data mungkin sudah tidak tersedia atau penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+          return false;
+        }
+        tabel.setBaris(siapkanBaris());
+        UI.toast('Buku "' + buku.judul + '" telah dihapus.', 'ok');
+        return true;
+      }
     });
   });
 })();

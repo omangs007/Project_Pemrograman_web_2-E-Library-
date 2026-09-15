@@ -189,6 +189,10 @@
           tglPinjam: form.tglPinjam.value,
           idPetugas: Layout.sesi().id
         });
+        if (!p) {
+          UI.toast('Peminjaman gagal disimpan. Penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+          return false;
+        }
         UI.toast('Peminjaman ' + p.id + ' tercatat. Jatuh tempo ' + UI.formatTanggal(p.tglJatuhTempo) + '.', 'ok');
         if (!modeRiwayat) tabel.setBaris(siapkanBaris());
         return true;
@@ -236,7 +240,10 @@
       nada: hitung.nominal ? 'bad' : undefined,
       onKonfirmasi: function () {
         var hasil = R.prosesPengembalian(id, hari);
-        tabel.setBaris(siapkanBaris());
+        if (!hasil) {
+          UI.toast('Pengembalian gagal disimpan. Penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+          return false;
+        }
         if (hasil.sudahDikembalikan) {
           UI.toast('Transaksi ini sudah dikembalikan sebelumnya. Tidak ada perubahan baru.', 'info');
           return true;
@@ -245,6 +252,7 @@
           UI.toast('Transaksi tidak ditemukan. Pengembalian tidak diproses.', 'bad');
           return true;
         }
+        tabel.setBaris(siapkanBaris());
         if (hasil.denda) UI.toast('Dikembalikan. Denda ' + UI.formatRupiah(hasil.denda.nominal) + ' tercatat sebagai belum lunas.', 'bad');
         else UI.toast('Buku dikembalikan tepat waktu. Terima kasih.', 'ok');
         return true;

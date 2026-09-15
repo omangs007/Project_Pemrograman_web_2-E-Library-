@@ -33,15 +33,20 @@
 
     document.getElementById('aturReset').addEventListener('click', function () {
       tutup();
-      UI.konfirmasi({
+      UI.modal({
         judul: 'Setel Ulang Data Demo',
-        pesan: 'Seluruh buku, anggota, dan transaksi yang Anda ubah akan dikembalikan ke kondisi awal. Lanjutkan?',
-        konfirmasi: 'Ya, Setel Ulang'
-      }).then(function (ya) {
-        if (!ya) return;
-        Store.reset();
-        UI.toast('Data demo telah dipulihkan.', 'ok');
-        setTimeout(function () { location.reload(); }, 800);
+        isiHtml: '<p>Seluruh buku, anggota, dan transaksi yang Anda ubah akan dikembalikan ke kondisi awal. Lanjutkan?</p>',
+        konfirmasi: 'Ya, Setel Ulang',
+        nada: 'bad',
+        onKonfirmasi: function () {
+          if (!Store.reset()) {
+            UI.toast('Data demo gagal dipulihkan. Penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+            return false;
+          }
+          UI.toast('Data demo telah dipulihkan.', 'ok');
+          setTimeout(function () { location.reload(); }, 800);
+          return true;
+        }
       });
     });
   });

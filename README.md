@@ -110,7 +110,7 @@ Dokumentasi Milestone 1 tersedia di [Perancangan](docs/perancangan.md).
 
 ## Pengujian
 
-Buka `http://127.0.0.1:8123/tests/runner.html`. Suite utama berisi 60 tes yang menguji logika murni —
+Buka `http://127.0.0.1:8123/tests/runner.html`. Runner memakai penyimpanan memori yang terisolasi dan tidak memengaruhi data aplikasi di localStorage. Suite utama berisi 60 tes yang menguji logika murni —
 CRUD store, perhitungan denda, penyaringan tabel, dan validator — tanpa dependensi
 apa pun. Seluruh tes harus berwarna hijau.
 

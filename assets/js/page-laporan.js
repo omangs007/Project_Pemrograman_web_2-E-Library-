@@ -4,6 +4,7 @@
 
   var R = Store.rules;
   var grafik = null;
+  var transaksiTersaring = [];
   var dari = document.getElementById('dariTgl');
   var sampai = document.getElementById('sampaiTgl');
   var jenis = document.getElementById('jenisLaporan');
@@ -71,8 +72,39 @@
     };
   }
 
+  function trenTersaring(data) {
+    var bulanan = {};
+    var bulan = [];
+    function catat(tanggal, seri) {
+      if (!tanggal) return;
+      var kunci = tanggal.slice(0, 7);
+      if (!bulanan[kunci]) bulanan[kunci] = { bulan: kunci, peminjaman: 0, pengembalian: 0 };
+      if (seri) bulanan[kunci][seri]++;
+      bulan.push(kunci);
+    }
+    catat(dari.value);
+    catat(sampai.value);
+    data.forEach(function (p) {
+      catat(p.tglPinjam, 'peminjaman');
+      catat(p.tglKembali, 'pengembalian');
+    });
+    if (!bulan.length) catat(HARI_INI);
+    bulan.sort();
+    function nomorBulan(iso) {
+      var bagian = iso.split('-');
+      return Number(bagian[0]) * 12 + Number(bagian[1]) - 1;
+    }
+    var akhir = nomorBulan(bulan[bulan.length - 1]);
+    var hasil = [];
+    for (var n = nomorBulan(bulan[0]); n <= akhir; n++) {
+      var kunci = String(Math.floor(n / 12)).padStart(4, '0') + '-' + String(n % 12 + 1).padStart(2, '0');
+      hasil.push(bulanan[kunci] || { bulan: kunci, peminjaman: 0, pengembalian: 0 });
+    }
+    return hasil;
+  }
+
   function renderGrafik(cetak) {
-    var tren = Store.tren();
+    var tren = trenTersaring(transaksiTersaring);
     var warna = warnaGrafik(cetak);
 
     if (grafik) grafik.destroy();
@@ -122,8 +154,10 @@
 
   function perbarui() {
     var data = dataTersaring();
+    transaksiTersaring = data;
     renderRingkasan(data);
     tabel.setBaris(data);
+    renderGrafik();
     document.getElementById('kopPeriode').textContent =
       'Periode ' + UI.formatTanggalPanjang(dari.value) + ' sampai ' + UI.formatTanggalPanjang(sampai.value) +
       ' · Dicetak ' + UI.formatTanggalPanjang(HARI_INI);
@@ -145,5 +179,4 @@
   document.addEventListener('temaberubah', renderGrafik);
 
   perbarui();
-  renderGrafik();
 })();

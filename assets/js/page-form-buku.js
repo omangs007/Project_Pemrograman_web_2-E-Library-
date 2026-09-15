@@ -140,8 +140,14 @@
 
     var total = parseInt(form.jumlahTotal.value, 10);
     var tersedia = parseInt(form.jumlahTersedia.value, 10);
-    if (tersedia > total) {
-      UI.tandaiGalat(form.jumlahTersedia, 'Jumlah tersedia (' + tersedia + ') tidak boleh melebihi jumlah total (' + total + ').');
+    var dipinjam = Store.rules.jumlahBukuDipinjam(id);
+    if (total < dipinjam) {
+      UI.tandaiGalat(form.jumlahTotal, 'Jumlah total (' + total + ') tidak boleh kurang dari ' + dipinjam + ' eksemplar yang sedang dipinjam.');
+      form.jumlahTotal.focus();
+      return;
+    }
+    if (tersedia > total - dipinjam) {
+      UI.tandaiGalat(form.jumlahTersedia, 'Jumlah tersedia (' + tersedia + ') maksimal ' + (total - dipinjam) + ' eksemplar: total ' + total + ' dikurangi ' + dipinjam + ' yang sedang dipinjam.');
       form.jumlahTersedia.focus();
       return;
     }
@@ -176,13 +182,9 @@
     }
     menyimpan = true;
     tombolSimpan.disabled = true;
-    var bukuBaru;
-    if (ubah) Store.buku.update(id, isi);
-    else bukuBaru = Store.buku.create(isi);
-
-    if (!Store.simpan()) {
-      if (!ubah) Store.buku.remove(bukuBaru.id);
-      UI.toast('Gagal menyimpan karena penyimpanan peramban penuh. Sampul berukuran besar kemungkinan penyebabnya. Hapus sampul lalu simpan ulang; biasanya ini menyelesaikan masalah.', 'bad');
+    var hasil = ubah ? Store.buku.update(id, isi) : Store.buku.create(isi);
+    if (!hasil) {
+      UI.toast('Gagal menyimpan buku. Penyimpanan peramban penuh atau tidak dapat diakses. Sampul berukuran besar dapat menjadi penyebabnya; coba hapus sampul lalu simpan ulang.', 'bad');
       menyimpan = false;
       tombolSimpan.disabled = false;
       return;

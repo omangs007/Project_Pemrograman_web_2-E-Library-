@@ -94,7 +94,9 @@
     email:   [UI.rules.wajib('Surel wajib diisi'), UI.rules.email('Format surel tidak valid')],
     telepon: [UI.rules.wajib('Nomor telepon wajib diisi'), UI.rules.custom(function (v) { return /^08\d{8,12}$/.test(String(v).trim()); }, 'Nomor harus diawali 08 dan berisi 10 sampai 14 digit')],
     jurusan: [UI.rules.wajib('Jurusan wajib dipilih')],
-    angkatan:[UI.rules.wajib('Angkatan wajib diisi'), UI.rules.rentang(2015, new Date().getFullYear(), 'Angkatan harus antara 2015 dan ' + new Date().getFullYear())]
+    angkatan:[UI.rules.wajib('Angkatan wajib diisi'), UI.rules.rentang(2015, new Date().getFullYear(), 'Angkatan harus antara 2015 dan ' + new Date().getFullYear()), UI.rules.custom(function (v) {
+      return /^\d+$/.test(String(v).trim()) && Number.isSafeInteger(Number(v));
+    }, 'Masukkan bilangan bulat yang valid')]
   };
 
   var JURUSAN = ['Teknik Informatika', 'Manajemen', 'Akuntansi', 'Ilmu Hukum', 'Sastra Inggris', 'Teknik Industri'];
@@ -134,15 +136,21 @@
           email: form.email.value.trim(),
           telepon: form.telepon.value.trim(),
           jurusan: form.jurusan.value,
-          angkatan: parseInt(form.angkatan.value, 10),
+          angkatan: Number(form.angkatan.value),
           status: form.status.value
         };
 
         var bentrok = Store.anggota.all().find(function (x) { return x.nim === isi.nim && x.id !== a.id; });
         if (bentrok) { UI.tandaiGalat(form.nim, 'NIM ini sudah terdaftar atas nama ' + bentrok.nama + '.'); return false; }
 
-        if (ubah) { Store.anggota.update(a.id, isi); UI.toast('Data ' + isi.nama + ' diperbarui.', 'ok'); }
-        else { isi.tglDaftar = Store.rules.hariIni(); Store.anggota.create(isi); UI.toast('Anggota ' + isi.nama + ' ditambahkan.', 'ok'); }
+        if (!ubah) isi.tglDaftar = Store.rules.hariIni();
+        var hasil = ubah ? Store.anggota.update(a.id, isi) : Store.anggota.create(isi);
+        if (!hasil) {
+          UI.toast('Data anggota gagal disimpan. Data mungkin sudah tidak tersedia atau penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+          return false;
+        }
+        if (ubah) UI.toast('Data ' + isi.nama + ' diperbarui.', 'ok');
+        else UI.toast('Anggota ' + isi.nama + ' ditambahkan.', 'ok');
 
         tabel.setBaris(siapkanBaris());
         return true;
@@ -169,15 +177,26 @@
       return;
     }
 
-    UI.konfirmasi({
+    var riwayat = Store.peminjaman.all().filter(function (p) { return p.idAnggota === id; }).length;
+    if (riwayat > 0) {
+      UI.toast(a.nama + ' masih tercatat pada ' + riwayat + ' transaksi riwayat sehingga tidak dapat dihapus.', 'bad');
+      return;
+    }
+
+    UI.modal({
       judul: 'Hapus Anggota',
-      pesan: 'Hapus data ' + a.nama + ' (' + a.nim + ') dari daftar anggota? Tindakan ini tidak dapat dibatalkan.',
-      konfirmasi: 'Ya, Hapus'
-    }).then(function (ya) {
-      if (!ya) return;
-      if (!Store.anggota.remove(id)) return;
-      tabel.setBaris(siapkanBaris());
-      UI.toast('Anggota ' + a.nama + ' telah dihapus.', 'ok');
+      isiHtml: '<p>' + UI.escapeHtml('Hapus data ' + a.nama + ' (' + a.nim + ') dari daftar anggota? Tindakan ini tidak dapat dibatalkan.') + '</p>',
+      konfirmasi: 'Ya, Hapus',
+      nada: 'bad',
+      onKonfirmasi: function () {
+        if (!Store.anggota.remove(id)) {
+          UI.toast('Anggota gagal dihapus. Data mungkin sudah tidak tersedia atau penyimpanan peramban tidak dapat ditulis. Silakan coba lagi.', 'bad');
+          return false;
+        }
+        tabel.setBaris(siapkanBaris());
+        UI.toast('Anggota ' + a.nama + ' telah dihapus.', 'ok');
+        return true;
+      }
     });
   });
 })();

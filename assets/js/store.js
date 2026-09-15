@@ -34,7 +34,34 @@ var Store = (function () {
 
   function pastikan() { if (!db) init(); return db; }
 
-  function reset() { db = Data.buatSeed(); catatUrutan(); tulis(); return db; }
+  /* Satu tindakan = satu penulisan. Gagal simpan mengembalikan seluruh
+     state, termasuk penghitung ID, sehingga percobaan ulang tetap aman.
+     Hasil sukses mengikuti mutasi; kegagalan persistensi selalu false. */
+  function mutasiDanSimpan(mutasi) {
+    var snapshot = JSON.parse(JSON.stringify(pastikan()));
+    var hasil;
+    try { hasil = mutasi(); }
+    catch (e) { db = snapshot; throw e; }
+    if (!tulis()) { db = snapshot; return false; }
+    return hasil;
+  }
+
+  function reset() {
+    return mutasiDanSimpan(function () {
+      db = Data.buatSeed();
+      catatUrutan();
+      return db;
+    });
+  }
+
+  // Mutasi internal tanpa persistensi untuk tindakan yang melibatkan
+  // beberapa koleksi, seperti peminjaman dan pengembalian.
+  function tambah(nama, obj) {
+    var arr = db[nama];
+    var baru = Object.assign({}, obj, { id: idBerikutnya(arr, PREFIKS[nama]) });
+    arr.push(baru);
+    return baru;
+  }
 
   /* Nomor urut berikutnya dihitung dari id tertinggi yang ada,
      bukan dari panjang array — menghapus baris tidak boleh
@@ -66,7 +93,6 @@ var Store = (function () {
   }
 
   function koleksi(nama) {
-    var prefiks = PREFIKS[nama];
     return {
       /* Pembacaan mengembalikan salinan agar pemanggil tidak dapat
          mengubah store tanpa melalui update(). */
@@ -76,28 +102,26 @@ var Store = (function () {
         return hasil ? Object.assign({}, hasil) : null;
       },
       create: function (obj) {
-        var arr = pastikan()[nama];
-        var baru = Object.assign({}, obj, { id: idBerikutnya(arr, prefiks) });
-        arr.push(baru);
-        tulis();
-        return baru;
+        return mutasiDanSimpan(function () { return tambah(nama, obj); });
       },
       update: function (id, patch) {
         var arr = pastikan()[nama];
         var i = arr.findIndex(function (r) { return r.id === id; });
         if (i === -1) return null;
-        arr[i] = Object.assign({}, arr[i], patch, { id: id });
-        tulis();
-        return arr[i];
+        return mutasiDanSimpan(function () {
+          arr[i] = Object.assign({}, arr[i], patch, { id: id });
+          return arr[i];
+        });
       },
       remove: function (id) {
         var arr = pastikan()[nama];
         var i = arr.findIndex(function (r) { return r.id === id; });
         if (i === -1) return false;
-        catatUrutan();
-        arr.splice(i, 1);
-        tulis();
-        return true;
+        return mutasiDanSimpan(function () {
+          catatUrutan();
+          arr.splice(i, 1);
+          return true;
+        });
       }
     };
   }
@@ -157,6 +181,15 @@ var Store = (function () {
     }).length;
   }
 
+  function jumlahBukuDipinjam(idBuku) {
+    var data = pastikan();
+    return data.detailPeminjaman.filter(function (d) {
+      return d.idBuku === idBuku && data.peminjaman.some(function (p) {
+        return p.id === d.idPinjam && !p.tglKembali;
+      });
+    }).length;
+  }
+
   function bukuDariPinjam(idPinjam) {
     var d = pastikan().detailPeminjaman.find(function (x) { return x.idPinjam === idPinjam; });
     if (!d) return null;
@@ -179,19 +212,21 @@ var Store = (function () {
   }
 
   function catatPeminjaman(opsi) {
-    var tglPinjam = opsi.tglPinjam || hariIni();
-    var pinjam = koleksi('peminjaman').create({
-      idAnggota: opsi.idAnggota,
-      idPetugas: opsi.idPetugas || 'PT001',
-      tglPinjam: tglPinjam,
-      tglJatuhTempo: jatuhTempo(tglPinjam),
-      tglKembali: null,
-      status: 'Dipinjam'
+    return mutasiDanSimpan(function () {
+      var tglPinjam = opsi.tglPinjam || hariIni();
+      var pinjam = tambah('peminjaman', {
+        idAnggota: opsi.idAnggota,
+        idPetugas: opsi.idPetugas || 'PT001',
+        tglPinjam: tglPinjam,
+        tglJatuhTempo: jatuhTempo(tglPinjam),
+        tglKembali: null,
+        status: 'Dipinjam'
+      });
+      tambah('detailPeminjaman', { idPinjam: pinjam.id, idBuku: opsi.idBuku, kondisiKembali: null });
+      var b = db.buku.find(function (x) { return x.id === opsi.idBuku; });
+      if (b) b.jumlahTersedia = Math.max(0, b.jumlahTersedia - 1);
+      return pinjam;
     });
-    koleksi('detailPeminjaman').create({ idPinjam: pinjam.id, idBuku: opsi.idBuku, kondisiKembali: null });
-    var b = pastikan().buku.find(function (x) { return x.id === opsi.idBuku; });
-    if (b) { b.jumlahTersedia = Math.max(0, b.jumlahTersedia - 1); tulis(); }
-    return pinjam;
   }
 
   function prosesPengembalian(idPinjam, tglKembali) {
@@ -205,28 +240,30 @@ var Store = (function () {
         sudahDikembalikan: true
       };
     }
-    var tgl = tglKembali || hariIni();
-    var pinjam = koleksi('peminjaman').update(idPinjam, { tglKembali: tgl, status: 'Dikembalikan' });
-    if (!pinjam) return { pinjam: null, denda: null };
+    return mutasiDanSimpan(function () {
+      var tgl = tglKembali || hariIni();
+      var pinjam = pinjamLama;
+      pinjam.tglKembali = tgl;
+      pinjam.status = 'Dikembalikan';
 
-    var d = pastikan().detailPeminjaman.find(function (x) { return x.idPinjam === idPinjam; });
-    if (d) { d.kondisiKembali = 'Baik'; }
+      var d = pastikan().detailPeminjaman.find(function (x) { return x.idPinjam === idPinjam; });
+      if (d) { d.kondisiKembali = 'Baik'; }
 
-    // Jalur internal memakai baris asli agar pemulihan stok tersimpan di database.
-    var bLive = d ? pastikan().buku.find(function (x) { return x.id === d.idBuku; }) : null;
-    if (bLive) bLive.jumlahTersedia = Math.min(bLive.jumlahTotal, bLive.jumlahTersedia + 1);
-    tulis();
+      // Jalur internal memakai baris asli agar pemulihan stok tersimpan di database.
+      var bLive = d ? pastikan().buku.find(function (x) { return x.id === d.idBuku; }) : null;
+      if (bLive) bLive.jumlahTersedia = Math.min(bLive.jumlahTotal, bLive.jumlahTersedia + 1);
 
-    var hitung = hitungDenda(pinjam.tglJatuhTempo, tgl);
-    if (hitung.hariTerlambat === 0) return { pinjam: pinjam, denda: null };
+      var hitung = hitungDenda(pinjam.tglJatuhTempo, tgl);
+      if (hitung.hariTerlambat === 0) return { pinjam: pinjam, denda: null };
 
-    var denda = koleksi('denda').create({
-      idPinjam: idPinjam,
-      hariTerlambat: hitung.hariTerlambat,
-      nominal: hitung.nominal,
-      statusBayar: 'Belum Lunas'
+      var denda = tambah('denda', {
+        idPinjam: idPinjam,
+        hariTerlambat: hitung.hariTerlambat,
+        nominal: hitung.nominal,
+        statusBayar: 'Belum Lunas'
+      });
+      return { pinjam: pinjam, denda: denda };
     });
-    return { pinjam: pinjam, denda: denda };
   }
 
   return {
@@ -242,6 +279,7 @@ var Store = (function () {
       statusPinjam: statusPinjam,
       hitungDenda: hitungDenda,
       jumlahPinjamanAktif: jumlahPinjamanAktif,
+      jumlahBukuDipinjam: jumlahBukuDipinjam,
       bolehPinjam: bolehPinjam,
       catatPeminjaman: catatPeminjaman,
       prosesPengembalian: prosesPengembalian,
