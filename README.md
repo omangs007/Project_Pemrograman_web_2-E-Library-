@@ -16,6 +16,8 @@ tampilan baku dan tombol untuk beralih ke mode terang.
 
 ## Menjalankan
 
+Prasyarat: akses internet saat membuka aplikasi untuk memuat Tailwind, Chart.js, dan Google Fonts dari CDN; tanpa akses tersebut, halaman tampil tanpa gaya Tailwind, grafik tidak dimuat, dan font memakai cadangan lokal.
+
 Jalankan perintah satu baris berikut di PowerShell dari akar proyek. Node.js diperlukan untuk server statis lokal ini; tidak perlu instalasi paket npm. Perintah disalin dari `docs/superpowers/CHECKPOINT.md` bagian "Cara menjalankan aplikasi":
 
 ```powershell

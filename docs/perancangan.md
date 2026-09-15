@@ -189,12 +189,12 @@ menyertakan teks, sehingga tetap terbaca oleh pengguna dengan buta warna.
 
 ### Tipografi, bentuk, dan kedalaman
 
-- Heading: Plus Jakarta Sans, bobot 600/700; teks isi dan data: Inter, bobot 400/500/600.
-- Skala tipografi utama: 12 / 14 / 16 / 20 / 24 / 32 / 40 px; komponen CSS juga memakai ukuran khusus seperti label 13 px.
+- Heading h1 sampai h4 memakai Plus Jakarta Sans dengan bobot 700 di CSS; teks isi dan data memakai Inter, dengan bobot normal (400) serta 500/600 pada komponen. Konfigurasi Tailwind menetapkan keluarga display/body, tanpa override bobot font.
+- Ukuran teks layar yang ditulis dalam CSS: 11 / 12 / 13 / 14 / 15 / 16 / 18 / 20 / 24 / 26 / 32 px. Kelas judul masuk memakai 1.5rem, judul panel 1.125rem, serta keterangan panel dan pengingat masuk 0.875rem; konfigurasi Tailwind tidak menetapkan skala ukuran font khusus.
 - Angka tabular memakai `font-variant-numeric: tabular-nums`.
 - Radius utama: 12 px untuk kontrol, 16 px untuk kartu, 24 px untuk panel, 999 px untuk lencana; tombol ikon memakai 10 px.
-- Blur: 12 / 20 / 32 px; kartu memakai 20 px, panel, sidebar, dan modal memakai 32 px.
-- Spasi mengikuti kelipatan 4 px dengan jarak baku antarkartu 24 px.
+- Token blur Tailwind: 12 / 20 / 32 px. CSS memakai 20 px pada kartu, permukaan tabel, topbar, dan toast; 32 px pada panel, sidebar, dan modal; serta 3 px pada overlay sidebar dan 6 px pada overlay modal.
+- Jarak antarkartu dashboard memakai `gap-5` (1.25rem, setara 20 px pada ukuran font akar 16 px). Spasi internal komponen memakai nilai yang lebih halus, antara lain 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, dan 20 px pada margin, padding, atau gap di CSS; nilainya tidak selalu kelipatan 4 px.
 
 | Bayangan | Mode gelap | Mode terang |
 |---|---|---|
@@ -307,7 +307,14 @@ FORM (desktop)                          TABEL → KARTU (mobile, <768px)
 - **Figma (Design System & High-Fidelity UI):** [LINK FIGMA ANDA]
 - **Stitch by Google (Wireframe & User Flow):** [SCREENSHOT STITCH]
 
-Ganti penanda Figma dengan tautan rancangan pada akun Anda, dan penanda Stitch dengan tangkapan layar wireframe serta user flow dari akun Anda sebelum pengumpulan.
+Daftar periksa sebelum pengumpulan Milestone 1 (Pekan ke-3):
+
+- [ ] Siapkan dokumentasi Markdown berisi hirarki menu Sidebar/Navbar dan konsep ER-D sederhana dengan Mermaid.js (tersedia di dokumen ini).
+- [ ] Buat wireframe Low-to-Mid Fidelity di Stitch atau alat HTML/CSS sejenis untuk tata letak komponen, skema komponen polimorfik, atau user flow admin.
+- [ ] Susun Design System awal di Figma: palet warna, gaya tipografi, serta komponen reusable Button, Form Input, dan Card.
+- [ ] Buat High-Fidelity UI di Figma untuk kedua halaman: Dashboard dan Data Master (misalnya Data Buku).
+- [ ] Isi slot Figma dengan tautan project Figma yang PUBLIK dan dapat dibuka penilai tanpa meminta akses.
+- [ ] Isi slot Stitch dengan tangkapan layar wireframe/user flow; sertakan embed link atau screenshot hasil rancangan Stitch/Figma di dokumen ini.
 
 ## 10. Catatan design system hidup
 
