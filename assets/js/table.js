@@ -146,6 +146,7 @@ var DataTable = (function () {
       setBaris: function (b) { baris = b; halaman = 1; render(); },
       setCari: function (q) { kueri = q; halaman = 1; render(); },
       setSaringan: function (kunci, nilai) { nilaiSaringan[kunci] = nilai; halaman = 1; render(); },
+      setPerHalaman: function (n) { perHalaman = n > 0 ? n : perHalaman; halaman = 1; render(); },
       barisTampil: function () { return terlihat.slice(); }
     };
   }

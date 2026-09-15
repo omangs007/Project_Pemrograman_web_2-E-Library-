@@ -494,3 +494,65 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   background: var(--glass); color: var(--muted); font-size: 12px; text-align: center; padding: 8px;
 }
 .sampul-pratinjau img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- Kop laporan (hanya tampil saat dicetak) --- */
+.kop-cetak { display: none; }
+
+/* --- Ringkasan laporan --- */
+.ringkas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+.ringkas-item { padding: 16px; border-radius: 12px; border: 1px solid var(--glass-border); }
+.ringkas-item p:first-child { font-size: 13px; color: var(--muted); }
+.ringkas-item p:last-child { font-family: "Plus Jakarta Sans", sans-serif; font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 4px; }
+
+/* ============================================================
+   CETAK — seluruh efek glass dimatikan, hasilnya hitam di atas
+   putih agar terbaca rapi di kertas.
+   ============================================================ */
+@media print {
+  @page { size: A4 portrait; margin: 16mm; }
+
+  .sidebar, .topbar, .footer-app, .toolbar, .panel-saring, .tabel-kaki,
+  .btn, .btn-icon, .sidebar-overlay, .toast-wrap, .modal-overlay { display: none !important; }
+
+  html, body, .app-bg, .area-utama, .konten {
+    margin: 0 !important; padding: 0 !important;
+    background: #fff !important; color: #000 !important;
+  }
+  .app-shell { display: block !important; }
+  .area-utama { margin-left: 0 !important; }
+
+  .glass-card, .glass-panel, .glass-strong, .ringkas-item {
+    background: #fff !important;
+    border: 1px solid #999 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    page-break-inside: avoid;
+  }
+
+  .kop-cetak {
+    display: block !important;
+    margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 2px solid #000; text-align: center;
+  }
+  .kop-cetak h1 { font-size: 16pt; margin: 0; }
+  .kop-cetak p { font-size: 10pt; margin: 2px 0 0; color: #000; }
+
+  .tabel { font-size: 9pt; }
+  .tabel thead th { background: #eee !important; color: #000 !important; border-bottom: 1px solid #000 !important; }
+  .tabel tbody td { border-bottom: 1px solid #ccc !important; color: #000 !important; }
+  .tabel tbody tr { page-break-inside: avoid; }
+
+  .badge { border: 1px solid #666 !important; background: transparent !important; color: #000 !important; }
+  .badge::before { display: none !important; }
+  .chip { background: transparent !important; color: #000 !important; border: 1px solid #999; }
+  .text-muted, .stat-label, .stat-catatan, .ringkas-item p:first-child, .tabel-kosong { color: #333 !important; }
+  .tabel-kosong strong { color: #000 !important; }
+
+  /* Tabel tetap berbentuk tabel saat dicetak, bukan mode kartu. */
+  .tabel, .tabel thead, .tabel tbody, .tabel tr, .tabel td, .tabel th { display: revert !important; }
+  .tabel thead { display: table-header-group !important; }
+  .tabel tbody td::before { display: none !important; }
+  .tabel tbody td { text-align: left !important; }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan Sirkulasi — E-Library Universitas Pamulang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../assets/js/config.js"></script>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="app-bg">
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasi utama"></aside>
+
+  <div class="area-utama">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="konten space-y-6">
+
+      <div class="kop-cetak">
+        <h1>LAPORAN SIRKULASI PERPUSTAKAAN</h1>
+        <p>Universitas Pamulang</p>
+        <p id="kopPeriode"></p>
+      </div>
+
+      <section class="glass-panel p-6 panel-saring">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          <div>
+            <label class="field-label" for="dariTgl">Periode Dari</label>
+            <input class="glass-input" type="date" id="dariTgl">
+          </div>
+          <div>
+            <label class="field-label" for="sampaiTgl">Sampai</label>
+            <input class="glass-input" type="date" id="sampaiTgl">
+          </div>
+          <div>
+            <label class="field-label" for="jenisLaporan">Jenis Laporan</label>
+            <select class="glass-select" id="jenisLaporan">
+              <option value="semua">Seluruh Transaksi</option>
+              <option value="aktif">Masih Dipinjam</option>
+              <option value="kembali">Sudah Dikembalikan</option>
+              <option value="denda">Hanya yang Berdenda</option>
+            </select>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-ghost flex-1" id="tombolSetelUlang">Setel Ulang</button>
+            <button class="btn btn-primary flex-1" id="tombolCetak">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+              Cetak
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="glass-panel p-6">
+        <h3 class="text-lg mb-4">Ringkasan Periode</h3>
+        <div class="ringkas-grid" id="ringkasan"></div>
+      </section>
+
+      <section class="glass-panel p-6">
+        <h3 class="text-lg mb-1">Perbandingan Bulanan</h3>
+        <p class="text-muted text-sm mb-4">Peminjaman dan pengembalian per bulan</p>
+        <div class="grafik-bungkus"><canvas id="grafikLaporan"></canvas></div>
+      </section>
+
+      <section class="glass-strong overflow-hidden">
+        <div class="p-6 pb-0"><h3 class="text-lg">Rincian Transaksi</h3></div>
+        <div id="tabelLaporan" class="mt-4"></div>
+      </section>
+
+    </main>
+
+    <footer class="footer-app">
+      Sistem Informasi Perpustakaan Digital &mdash; Universitas Pamulang &copy; 2026
+    </footer>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/store.js"></script>
+<script src="../assets/js/ui.js"></script>
+<script src="../assets/js/table.js"></script>
+<script src="../assets/js/layout.js"></script>
+<script src="../assets/js/page-laporan.js"></script>
+</body>
+</html>
