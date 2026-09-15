@@ -176,8 +176,19 @@
     }
     menyimpan = true;
     tombolSimpan.disabled = true;
-    if (ubah) { Store.buku.update(id, isi); UI.toast('Perubahan pada "' + isi.judul + '" tersimpan.', 'ok'); }
-    else { Store.buku.create(isi); UI.toast('Buku "' + isi.judul + '" ditambahkan ke koleksi.', 'ok'); }
+    var bukuBaru;
+    if (ubah) Store.buku.update(id, isi);
+    else bukuBaru = Store.buku.create(isi);
+
+    if (!Store.simpan()) {
+      if (!ubah) Store.buku.remove(bukuBaru.id);
+      UI.toast('Gagal menyimpan karena penyimpanan peramban penuh. Sampul berukuran besar kemungkinan penyebabnya. Hapus sampul lalu simpan ulang; biasanya ini menyelesaikan masalah.', 'bad');
+      menyimpan = false;
+      tombolSimpan.disabled = false;
+      return;
+    }
+    if (ubah) UI.toast('Perubahan pada "' + isi.judul + '" tersimpan.', 'ok');
+    else UI.toast('Buku "' + isi.judul + '" ditambahkan ke koleksi.', 'ok');
 
     setTimeout(function () { window.location.href = 'data-buku.html'; }, 700);
   });

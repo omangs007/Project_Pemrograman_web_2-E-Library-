@@ -20,8 +20,8 @@ var Store = (function () {
   }
 
   function tulis() {
-    try { localStorage.setItem(KUNCI, JSON.stringify(db)); }
-    catch (e) { console.warn('Gagal menyimpan ke localStorage:', e.message); }
+    try { localStorage.setItem(KUNCI, JSON.stringify(db)); return true; }
+    catch (e) { console.warn('Gagal menyimpan ke localStorage:', e.message); return false; }
   }
 
   function init() {
