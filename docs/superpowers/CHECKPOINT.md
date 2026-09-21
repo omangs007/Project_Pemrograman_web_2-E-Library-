@@ -102,18 +102,20 @@ memintanya untuk Milestone 1. Slotnya `[SCREENSHOT STITCH]` di `docs/perancangan
 ### 4. Identitas commit — sudah diperbaiki
 
 Seluruh riwayat kini atas nama `omangs007 <128009290+omangs007@users.noreply.github.com>`,
-dan GitHub memetakan tiap commit ke akun tersebut. Sebelumnya 43 commit tercatat atas nama
-akun lain karena `git config --global` di mesin ini menyetel identitas itu; kredensial
-push-nya sendiri selalu `omangs007`, jadi ini murni soal penulis commit, bukan kolaborator.
+dan GitHub memetakan tiap commit ke akun tersebut. Sebelumnya commit tercatat atas nama
+akun lain karena `git config --global` di mesin ini menyetel identitas itu, sementara
+kredensial push-nya selalu `omangs007`. Jadi ini soal penulis commit, bukan kolaborator:
+GitHub dan layanan yang membacanya seperti Vercel menampilkan penulis commit, yang dipetakan
+lewat email penulis.
 
-Perbaikannya memakai `git filter-branch --env-filter` atas 44 commit lalu force push dengan
-`--force-with-lease`. Isi pohon tidak berubah satu byte pun, hanya hash-nya yang bergeser;
-`c9a2fec` menjadi `d2d6b29`. Cadangan sebelum penulisan ulang disimpan di ref lokal
-`refs/backup/pre-rewrite-20260921` (`5bf65ae`) dan tidak ikut ter-push.
+Perbaikannya memakai `git filter-branch` atas seluruh commit lalu force push dengan
+`--force-with-lease`. Isi pohon tidak berubah satu byte pun, hanya hash-nya yang bergeser.
+Pada putaran kedua, baris trailer co-author pada setiap pesan commit ikut dihapus, sehingga
+riwayat repositori ini hanya menyebut satu nama.
 
-Repo ini sekarang punya `user.name` dan `user.email` lokal sendiri, jadi commit berikutnya
-sudah benar tanpa perlu menyentuh config global mesin — repositori lain di mesin ini masih
-memakai identitas akun lain.
+Repo ini punya `user.name` dan `user.email` lokal sendiri, jadi commit berikutnya sudah
+benar tanpa menyentuh config global mesin — yang masih memakai identitas lama untuk
+repositori lain.
 
 ---
 
