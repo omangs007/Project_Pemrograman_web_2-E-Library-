@@ -10,19 +10,21 @@ gerbang review, lalu review menyeluruh seluruh branch menemukan enam temuan Impo
 yang seluruhnya sudah diperbaiki dan diverifikasi ulang. Pekerjaan sudah di-merge ke
 `master` dan **sudah ter-push ke GitHub**.
 
-Yang tersisa bukan kodenya. Figma dan Vercel sudah rampung pada 21 September 2026; yang
-masih menganggur tinggal wireframe dan user flow di Stitch.
+Seluruh keluaran Milestone 1 sudah lengkap per 21 September 2026: dokumentasi, wireframe dan
+user flow, design system beserta dua layar High-Fidelity di Figma, dan demo Vercel. Yang
+masih membutuhkan Anda hanya menyambung ulang koneksi Git di Vercel, karena repositori
+sempat dibuat ulang sehingga tautannya putus dan push terbaru belum ikut naik.
 
 | Hal | Status |
 |---|---|
 | Kode aplikasi, 17 task | Selesai, review bersih |
-| Merge ke `master` | Selesai (`55bde7d`) |
-| Push ke GitHub | Selesai, 42 commit |
-| Dokumentasi Milestone 1 | Selesai, kecuali tangkapan layar Stitch |
+| Merge ke `master` | Selesai; hash lama tidak berlaku lagi setelah riwayat ditulis ulang |
+| Push ke GitHub | Selesai, 50 commit, seluruhnya atas nama omangs007 |
+| Dokumentasi Milestone 1 | Selesai seluruhnya |
 | Figma — design system | Selesai |
 | Figma — dua layar High-Fidelity | Selesai, 21 September 2026 |
 | Deploy Vercel | Selesai, 21 September 2026 |
-| Wireframe Stitch | **Belum tersentuh** |
+| Wireframe dan user flow | Selesai, 21 September 2026 |
 
 Repositori: <https://github.com/omangs007/Project_Pemrograman_web_2-E-Library->
 
@@ -94,10 +96,21 @@ seluruh aset yang dirujuk HTML terlacak git (tidak ada berkas yang hanya ada di 
 lokal), dan penulisan huruf besar-kecil setiap referensi cocok persis dengan nama
 berkasnya. Slot `[LINK VERCEL ANDA]` di README sudah terisi.
 
-### 3. Wireframe dan user flow di Stitch
+### 3. Wireframe dan user flow — selesai
 
-Belum tersentuh sama sekali, dan ini terpisah dari pekerjaan Figma. Panduan tugas
-memintanya untuk Milestone 1. Slotnya `[SCREENSHOT STITCH]` di `docs/perancangan.md`.
+`docs/wireframe.html`, juga tersedia daring di
+<https://project-pemrograman-web-2-e-library.vercel.app/docs/wireframe.html> setelah deploy.
+
+Panduan tugas pada baris 47 meminta Stitch by Google **atau tools HTML/CSS wireframing
+sejenis**, dan jalur kedua yang dipilih: rancangannya hidup di dalam repositori, ikut
+ter-deploy, serta tidak bergantung pada akun pihak ketiga. Isinya user flow admin yang
+dirender Mermaid, tujuh wireframe layar (masuk, dashboard, data master, form buku,
+peminjaman, laporan, mode ponsel), dan skema komponen polimorfik untuk tombol, badge,
+medan isian, serta tabel yang berubah menjadi kartu di bawah 768 px.
+
+Gayanya sengaja abu-abu tanpa permukaan glass supaya terbaca sebagai rancangan tata letak,
+bukan produk jadi. Bila penilai secara khusus menuntut Stitch, lembar ini tetap berguna
+sebagai sumber: tiap layar dapat disalin menjadi prompt Stitch tanpa merancang ulang.
 
 ### 4. Identitas commit — sudah diperbaiki
 

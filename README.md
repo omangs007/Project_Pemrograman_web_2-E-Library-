@@ -70,6 +70,7 @@ Pengaturan berupa modal profil, tema, dan reset data demo yang dibuka melalui ev
 ├── index.html              Halaman login admin
 ├── docs/
 │   ├── perancangan.md      Dokumentasi Milestone 1
+│   ├── wireframe.html      Wireframe Low-to-Mid Fidelity dan user flow
 │   └── design-system.html  Style guide hidup
 ├── assets/
 │   ├── css/style.css       Token tema dan seluruh komponen
@@ -106,6 +107,7 @@ Pengaturan berupa modal profil, tema, dan reset data demo yang dibuka melalui ev
 - Login merupakan simulasi client-side, dan data disimpan pada peramban yang digunakan.
 
 Dokumentasi Milestone 1 tersedia di [Perancangan](docs/perancangan.md).
+[Wireframe dan user flow](docs/wireframe.html) memuat rancangan Low-to-Mid Fidelity ketujuh layar.
 [Design system hidup](docs/design-system.html) menampilkan token dan komponen.
 
 ## Pengujian

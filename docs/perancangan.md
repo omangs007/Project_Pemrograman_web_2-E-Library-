@@ -308,16 +308,18 @@ FORM (desktop)                          TABEL → KARTU (mobile, <768px)
   - Halaman `Design System` — 4 collection variabel, 10 text style, 3 effect style, component set Button, Input, Badge, dan Card, ditambah section `Komponen Aplikasi` berisi Sidebar, Topbar, serta Kartu Statistik.
   - Halaman `Dashboard` — High-Fidelity UI 1440x900: [buka layar](https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux?node-id=24-2)
   - Halaman `Data Buku` — High-Fidelity UI 1440x900: [buka layar](https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux?node-id=31-2)
-- **Stitch by Google (Wireframe & User Flow):** [SCREENSHOT STITCH]
+- **Wireframe & User Flow (Low-to-Mid Fidelity):** [docs/wireframe.html](wireframe.html) — versi daring: <https://project-pemrograman-web-2-e-library.vercel.app/docs/wireframe.html>
+  - Disusun memakai jalur `tools HTML/CSS wireframing sejenis` yang dibolehkan panduan tugas, bukan Stitch, agar rancangannya hidup di dalam repositori dan ikut ter-deploy.
+  - Isi: user flow admin, tujuh wireframe layar (masuk, dashboard, data master, form, peminjaman, laporan, mode ponsel), dan skema komponen polimorfik.
 
 Daftar periksa sebelum pengumpulan Milestone 1 (Pekan ke-3):
 
-- [ ] Siapkan dokumentasi Markdown berisi hirarki menu Sidebar/Navbar dan konsep ER-D sederhana dengan Mermaid.js (tersedia di dokumen ini).
-- [ ] Buat wireframe Low-to-Mid Fidelity di Stitch atau alat HTML/CSS sejenis untuk tata letak komponen, skema komponen polimorfik, atau user flow admin.
+- [x] Siapkan dokumentasi Markdown berisi hirarki menu Sidebar/Navbar dan konsep ER-D sederhana dengan Mermaid.js (tersedia di dokumen ini).
+- [x] Buat wireframe Low-to-Mid Fidelity di Stitch atau alat HTML/CSS sejenis untuk tata letak komponen, skema komponen polimorfik, atau user flow admin.
 - [x] Susun Design System awal di Figma: palet warna, gaya tipografi, serta komponen reusable Button, Form Input, dan Card.
 - [x] Buat High-Fidelity UI di Figma untuk kedua halaman: Dashboard dan Data Master (misalnya Data Buku).
-- [ ] Isi slot Figma dengan tautan project Figma yang PUBLIK dan dapat dibuka penilai tanpa meminta akses.
-- [ ] Isi slot Stitch dengan tangkapan layar wireframe/user flow; sertakan embed link atau screenshot hasil rancangan Stitch/Figma di dokumen ini.
+- [x] Isi slot Figma dengan tautan project Figma yang PUBLIK dan dapat dibuka penilai tanpa meminta akses.
+- [x] Isi slot wireframe/user flow dengan tautan rancangan yang dapat dibuka penilai; tersedia sebagai halaman HTML di repositori dan pada demo daring.
 
 ## 10. Catatan design system hidup
 

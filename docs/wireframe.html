@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe &amp; User Flow — E-Library Universitas Pamulang</title>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<style>
+  /* Sengaja lepas dari style.css aplikasi. Wireframe harus terbaca sebagai
+     rancangan tata letak, bukan sebagai produk jadi, sehingga di sini tidak ada
+     warna merek, bayangan, maupun permukaan glass — hanya abu-abu dan garis. */
+  :root {
+    --kertas: #FFFFFF;
+    --latar: #F4F5F7;
+    --garis: #B9BDC7;
+    --garis-tipis: #D8DBE2;
+    --isi: #E9EBEF;
+    --isi-kuat: #D3D7DE;
+    --teks: #1F2430;
+    --teks-redup: #666D7A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px 72px;
+    background: var(--latar); color: var(--teks);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 15px; line-height: 1.6;
+  }
+  .bungkus { max-width: 1120px; margin: 0 auto; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 48px 0 6px; padding-top: 20px; border-top: 2px solid var(--garis); }
+  h3 { font-size: 15px; margin: 28px 0 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--teks-redup); }
+  p { margin: 0 0 12px; max-width: 78ch; }
+  .redup { color: var(--teks-redup); }
+  .kecil { font-size: 13px; }
+  code { background: var(--isi); padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+
+  /* --- Kerangka wireframe --- */
+  .wf { background: var(--kertas); border: 2px solid var(--garis); border-radius: 8px; overflow: hidden; }
+  .wf-judul {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .wf-judul span { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--teks-redup); }
+  .layar { display: grid; grid-template-columns: 180px 1fr; min-height: 420px; }
+  .sisi { border-right: 2px solid var(--garis); padding: 12px; background: #FBFBFC; }
+  .utama { display: flex; flex-direction: column; }
+  .atas {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 12px 16px; border-bottom: 2px solid var(--garis);
+  }
+  .isi-layar { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+  .kotak { border: 1px solid var(--garis); border-radius: 6px; background: var(--kertas); padding: 10px; }
+  .kotak.isi { background: var(--isi); }
+  .kotak.samar { border-style: dashed; color: var(--teks-redup); }
+  .baris { display: flex; gap: 12px; }
+  .baris > * { flex: 1; min-width: 0; }
+  .tumpuk { display: flex; flex-direction: column; gap: 8px; }
+  .tengah { display: grid; place-items: center; text-align: center; }
+
+  .label { font-size: 12px; color: var(--teks-redup); }
+  .nilai { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  .pil { display: inline-block; border: 1px solid var(--garis); border-radius: 999px; padding: 2px 10px; font-size: 12px; }
+  .tombol { display: inline-block; border: 1px solid var(--garis); border-radius: 6px; padding: 6px 12px; font-size: 13px; background: var(--kertas); }
+  .tombol.utama { background: var(--isi-kuat); font-weight: 600; }
+  .medan { border: 1px solid var(--garis); border-radius: 6px; padding: 7px 10px; font-size: 13px; color: var(--teks-redup); background: var(--kertas); }
+
+  .menu { list-style: none; margin: 0; padding: 0; font-size: 13px; }
+  .menu li { padding: 6px 8px; border-radius: 5px; margin-bottom: 2px; }
+  .menu li.aktif { background: var(--isi-kuat); font-weight: 600; }
+  .menu .grup { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--teks-redup); padding: 10px 8px 2px; }
+  .menu hr { border: 0; border-top: 1px solid var(--garis-tipis); margin: 10px 4px; }
+
+  .grafik { min-height: 132px; display: grid; place-items: center; background:
+    repeating-linear-gradient(45deg, transparent, transparent 9px, var(--isi) 9px, var(--isi) 10px); }
+
+  table.wf-tabel { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.wf-tabel th, table.wf-tabel td { border-bottom: 1px solid var(--garis-tipis); padding: 7px 8px; text-align: left; }
+  table.wf-tabel th { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--teks-redup); background: #FAFAFB; }
+  .avatar { display: inline-block; width: 22px; height: 22px; border: 1px solid var(--garis); border-radius: 5px; background: var(--isi); vertical-align: middle; }
+
+  .catatan { border-left: 3px solid var(--garis); padding: 2px 0 2px 12px; margin: 10px 0 0; font-size: 13px; color: var(--teks-redup); }
+  .ponsel { max-width: 300px; }
+  .ponsel .layar { grid-template-columns: 1fr; min-height: 0; }
+  .alur { background: var(--kertas); border: 2px solid var(--garis); border-radius: 8px; padding: 16px; overflow-x: auto; }
+  .alur pre { margin: 0; font-size: 12px; white-space: pre; color: var(--teks-redup); }
+  .kisi-dua { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+</style>
+</head>
+<body>
+<div class="bungkus">
+
+  <header>
+    <h1>Wireframe &amp; User Flow</h1>
+    <p class="redup">Admin Panel Sistem Informasi Perpustakaan Digital — Universitas Pamulang</p>
+    <p>
+      Lembar ini adalah keluaran <strong>Low-to-Mid Fidelity</strong> untuk Milestone 1. Panduan tugas
+      membolehkan wireframe disusun dengan Stitch by Google <em>atau tools HTML/CSS wireframing sejenis</em>;
+      berkas ini memakai jalur kedua sehingga rancangannya hidup di dalam repositori, ikut ter-deploy,
+      dan tetap sinkron ketika tata letaknya berubah.
+    </p>
+    <p class="kecil redup">
+      Warna, bayangan, dan permukaan glass sengaja ditiadakan di sini. Yang diuji pada tahap ini adalah
+      penempatan komponen dan alur kerja, bukan rupa akhirnya — rupa akhir ada di
+      <a href="design-system.html">design system</a> dan di file Figma.
+    </p>
+  </header>
+
+  <h2>1. User flow admin</h2>
+  <p>Alur yang sama dengan Bagian 4 <a href="perancangan.md">perancangan.md</a>, digambar agar dapat dibaca sekali lihat.</p>
+  <div class="alur">
+    <pre class="mermaid">
+flowchart TD
+    A[Login Admin] --&gt; B[Dashboard]
+    B --&gt; C{Pilih Tindakan}
+    C --&gt;|Kelola koleksi| D[Data Buku]
+    C --&gt;|Kelola anggota| E[Data Anggota]
+    C --&gt;|Layani transaksi| F[Peminjaman]
+    C --&gt;|Rekap| G[Laporan]
+    D --&gt; H[Form Tambah/Edit Buku]
+    H --&gt;|Validasi lolos| D
+    H --&gt;|Validasi gagal| H
+    D --&gt; I[Modal Konfirmasi Hapus]
+    F --&gt; J[Catat Peminjaman Baru]
+    F --&gt; K[Proses Pengembalian]
+    K --&gt; L{Melewati jatuh tempo?}
+    L --&gt;|Ya| M[Hitung Denda Otomatis]
+    L --&gt;|Tidak| N[Selesai]
+    M --&gt; N
+    G --&gt; O[Cetak Laporan]
+    </pre>
+  </div>
+  <p class="catatan">
+    Titik keputusan yang menentukan perilaku sistem ada dua: validasi formulir yang menahan pengguna di
+    halaman yang sama saat gagal, dan pemeriksaan jatuh tempo yang memicu perhitungan denda otomatis.
+  </p>
+
+  <h2>2. Wireframe layar</h2>
+
+  <h3>W1 — Masuk</h3>
+  <div class="wf-judul">Login <span>360 × 480 · pintu masuk tunggal, tanpa navigasi</span></div>
+  <div class="wf" style="max-width:420px">
+    <div class="isi-layar" style="gap:10px">
+      <div class="kotak tengah" style="height:56px">Lambang</div>
+      <div class="tengah"><strong>Perpustakaan Digital</strong></div>
+      <div class="tengah label">Universitas Pamulang — Panel Administrator</div>
+      <div class="label" style="margin-top:6px">Alamat Surel</div>
+      <div class="medan">admin@unpam.ac.id</div>
+      <div class="label">Kata Sandi</div>
+      <div class="medan">•••••••• &nbsp; <span style="float:right">👁</span></div>
+      <div class="label">☐ Ingat saya di perangkat ini</div>
+      <div class="tombol utama tengah" style="padding:9px">Masuk ke Panel</div>
+      <div class="kotak samar kecil">Akun demo: administrator dan pustakawan</div>
+    </div>
+  </div>
+
+  <h3>W2 — Dashboard</h3>
+  <div class="wf-judul">Dashboard <span>1440 × 900 · ringkasan angka, tren, dan tindak lanjut</span></div>
+  <div class="wf">
+    <div class="layar">
+      <aside class="sisi">
+        <div class="kotak isi kecil" style="margin-bottom:12px">Lambang + nama aplikasi</div>
+        <ul class="menu">
+          <li class="aktif">Dashboard</li>
+          <li class="grup">Master Data</li>
+          <li>Data Buku</li>
+          <li>Data Anggota</li>
+          <li class="grup">Transaksi</li>
+          <li>Peminjaman</li>
+          <li>Pengembalian</li>
+          <li class="grup">Laporan</li>
+          <li>Laporan Sirkulasi</li>
+          <hr>
+          <li>Pengaturan</li>
+          <li>Keluar</li>
+        </ul>
+      </aside>
+      <div class="utama">
+        <div class="atas">
+          <div><strong>Dashboard</strong><div class="label">Ringkasan aktivitas perpustakaan</div></div>
+          <div class="kecil redup">◐ tema &nbsp; ◯ avatar</div>
+        </div>
+        <div class="isi-layar">
+          <div class="baris">
+            <div class="kotak"><div class="label">Total Koleksi</div><div class="nilai">24</div><div class="label">117 eksemplar</div></div>
+            <div class="kotak"><div class="label">Anggota Aktif</div><div class="nilai">15</div><div class="label">dari 18 terdaftar</div></div>
+            <div class="kotak"><div class="label">Sedang Dipinjam</div><div class="nilai">11</div><div class="label">transaksi berjalan</div></div>
+            <div class="kotak"><div class="label">Terlambat</div><div class="nilai">4</div><div class="label">perlu ditindaklanjuti</div></div>
+          </div>
+          <div class="baris">
+            <div class="kotak" style="flex:3"><strong class="kecil">Tren Sirkulasi</strong><div class="label">Peminjaman 12 bulan terakhir</div><div class="grafik kotak samar" style="margin-top:8px">grafik garis dua seri</div></div>
+            <div class="kotak" style="flex:2"><strong class="kecil">Komposisi Koleksi</strong><div class="label">Jumlah judul per kategori</div><div class="grafik kotak samar" style="margin-top:8px">grafik donat 8 kategori</div></div>
+          </div>
+          <div class="baris">
+            <div class="kotak"><strong class="kecil">Aktivitas Terbaru</strong><div class="tumpuk kecil redup" style="margin-top:8px"><div>• nama — meminjam judul</div><div>• nama — meminjam judul</div><div>• nama — meminjam judul</div></div></div>
+            <div class="kotak"><strong class="kecil">Buku Terpopuler</strong><div class="tumpuk kecil redup" style="margin-top:8px"><div>1. judul ▁▁▁▁▁ 2x</div><div>2. judul ▁▁▁▁▁ 2x</div><div>3. judul ▁▁▁ 1x</div></div></div>
+            <div class="kotak"><strong class="kecil">Jatuh Tempo</strong><div class="tumpuk kecil redup" style="margin-top:8px"><div>judul / peminjam <span class="pil">terlambat</span></div><div>judul / peminjam <span class="pil">terlambat</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="catatan">Empat kartu angka di baris pertama menjawab pertanyaan “apa yang perlu saya tahu sekarang”; baris ketiga menjawab “apa yang perlu saya kerjakan”.</p>
+
+  <h3>W3 — Data Master (Data Buku)</h3>
+  <div class="wf-judul">Data Buku <span>1440 × 900 · pola yang dipakai ulang oleh Data Anggota</span></div>
+  <div class="wf">
+    <div class="layar">
+      <aside class="sisi">
+        <div class="kotak isi kecil" style="margin-bottom:12px">Lambang + nama aplikasi</div>
+        <ul class="menu">
+          <li>Dashboard</li>
+          <li class="grup">Master Data</li>
+          <li class="aktif">Data Buku</li>
+          <li>Data Anggota</li>
+          <li class="grup">Transaksi</li>
+          <li>Peminjaman</li>
+          <li>Pengembalian</li>
+          <li class="grup">Laporan</li>
+          <li>Laporan Sirkulasi</li>
+        </ul>
+      </aside>
+      <div class="utama">
+        <div class="atas">
+          <div><strong>Data Buku</strong><div class="label">Kelola koleksi perpustakaan</div></div>
+          <div class="kecil redup">◐ ◯</div>
+        </div>
+        <div class="isi-layar">
+          <div class="kotak" style="padding:0">
+            <div class="baris" style="padding:10px; border-bottom:1px solid var(--garis-tipis); align-items:center">
+              <div class="medan" style="flex:4">⌕ Cari judul, pengarang, atau ISBN…</div>
+              <div class="medan" style="flex:1">Semua Kategori ▾</div>
+              <div class="medan" style="flex:1">Semua Status ▾</div>
+              <div style="flex:0 0 auto"><span class="tombol utama">+ Tambah Buku</span></div>
+            </div>
+            <table class="wf-tabel">
+              <thead><tr><th>Judul Buku ⇅</th><th>ISBN ⇅</th><th>Kategori</th><th>Rak</th><th>Stok</th><th>Status</th><th>Aksi</th></tr></thead>
+              <tbody>
+                <tr><td><span class="avatar"></span> judul buku<div class="label">pengarang</div></td><td>978…</td><td><span class="pil">kategori</span></td><td>R-00-A</td><td>4 / 5</td><td><span class="pil">Tersedia</span></td><td>✎ 🗑</td></tr>
+                <tr><td><span class="avatar"></span> judul buku<div class="label">pengarang</div></td><td>978…</td><td><span class="pil">kategori</span></td><td>R-00-A</td><td>2 / 2</td><td><span class="pil">Terbatas</span></td><td>✎ 🗑</td></tr>
+                <tr><td><span class="avatar"></span> judul buku<div class="label">pengarang</div></td><td>978…</td><td><span class="pil">kategori</span></td><td>R-00-A</td><td>5 / 6</td><td><span class="pil">Tersedia</span></td><td>✎ 🗑</td></tr>
+              </tbody>
+            </table>
+            <div class="baris" style="padding:10px; border-top:1px solid var(--garis-tipis); align-items:center">
+              <div class="label">Menampilkan 1–8 dari 24 data</div>
+              <div style="text-align:right"><span class="tombol">←</span> <span class="tombol utama">1</span> <span class="tombol">2</span> <span class="tombol">3</span> <span class="tombol">→</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="catatan">Satu panel menampung tiga wilayah berurutan: penyaring, tabel, lalu kaki berisi jumlah data dan paginasi. Data Anggota memakai kerangka yang sama dengan kolom berbeda.</p>
+
+  <div class="kisi-dua">
+    <div>
+      <h3>W4 — Form Buku</h3>
+      <div class="wf-judul">Tambah / Ubah <span>formulir bertahap</span></div>
+      <div class="wf">
+        <div class="isi-layar">
+          <div><strong class="kecil">Informasi Bibliografi</strong><div class="label">identitas utama buku</div></div>
+          <div class="label">Judul Buku</div><div class="medan">teks</div>
+          <div class="baris"><div><div class="label">Pengarang</div><div class="medan">teks</div></div><div><div class="label">Penerbit</div><div class="medan">teks</div></div></div>
+          <div class="baris"><div><div class="label">ISBN</div><div class="medan">10 atau 13 digit</div></div><div><div class="label">Tahun Terbit</div><div class="medan">angka</div></div></div>
+          <hr style="border:0;border-top:1px solid var(--garis-tipis);width:100%">
+          <div><strong class="kecil">Klasifikasi dan Lokasi</strong></div>
+          <div class="baris"><div><div class="label">Kategori</div><div class="medan">pilih ▾</div></div><div><div class="label">Lokasi Rak</div><div class="medan">R-00-A</div></div></div>
+          <div class="baris" style="align-items:flex-start">
+            <div class="kotak samar tengah" style="flex:0 0 96px;height:120px">pratinjau<br>sampul</div>
+            <div><div class="label">URL Sampul</div><div class="medan">https://…</div><div class="label" style="margin-top:8px">galat validasi tampil di bawah medan</div></div>
+          </div>
+          <div style="text-align:right"><span class="tombol">Batal</span> <span class="tombol utama">Simpan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>W5 — Peminjaman</h3>
+      <div class="wf-judul">Transaksi Sirkulasi <span>dua tab dalam satu halaman</span></div>
+      <div class="wf">
+        <div class="isi-layar">
+          <div class="baris" style="gap:0">
+            <div class="tombol utama" style="flex:0 0 auto">Peminjaman Aktif</div>
+            <div class="tombol" style="flex:0 0 auto;border-left:0">Riwayat Pengembalian</div>
+          </div>
+          <div class="baris" style="align-items:center">
+            <div class="medan" style="flex:3">⌕ Cari anggota atau judul buku…</div>
+            <div class="medan" style="flex:1">Semua Kondisi ▾</div>
+            <div style="flex:0 0 auto"><span class="tombol utama">+ Peminjaman Baru</span></div>
+          </div>
+          <table class="wf-tabel">
+            <thead><tr><th>Kode</th><th>Peminjam</th><th>Buku</th><th>Jatuh Tempo</th><th>Sisa Waktu</th><th>Aksi</th></tr></thead>
+            <tbody>
+              <tr><td>PJ0xx</td><td>nama<div class="label">NIM</div></td><td>judul</td><td>tanggal</td><td>terlambat ▁▁▁</td><td><span class="tombol">Kembalikan</span></td></tr>
+              <tr><td>PJ0xx</td><td>nama<div class="label">NIM</div></td><td>judul</td><td>tanggal</td><td>sisa 3 hari ▁▁</td><td><span class="tombol">Kembalikan</span></td></tr>
+            </tbody>
+          </table>
+          <div class="kotak samar kecil">Modal “Peminjaman Baru”: pilih anggota → pilih buku → tanggal pinjam → jatuh tempo terisi otomatis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kisi-dua">
+    <div>
+      <h3>W6 — Laporan Sirkulasi</h3>
+      <div class="wf-judul">Laporan <span>saring, rekap, cetak</span></div>
+      <div class="wf">
+        <div class="isi-layar">
+          <div class="baris" style="align-items:flex-end">
+            <div><div class="label">Periode Dari</div><div class="medan">tanggal</div></div>
+            <div><div class="label">Sampai</div><div class="medan">tanggal</div></div>
+            <div><div class="label">Jenis Laporan</div><div class="medan">pilih ▾</div></div>
+            <div style="flex:0 0 auto"><span class="tombol">Setel Ulang</span> <span class="tombol utama">Cetak</span></div>
+          </div>
+          <div class="baris">
+            <div class="kotak"><div class="label">Total</div><div class="nilai">20</div></div>
+            <div class="kotak"><div class="label">Kembali</div><div class="nilai">9</div></div>
+            <div class="kotak"><div class="label">Dipinjam</div><div class="nilai">11</div></div>
+            <div class="kotak"><div class="label">Denda</div><div class="nilai">3</div></div>
+          </div>
+          <div class="kotak"><strong class="kecil">Transaksi Tersaring per Bulan</strong><div class="grafik kotak samar" style="margin-top:8px">grafik batang dua seri</div></div>
+          <div class="kotak samar kecil">Blok cetak: hitam di atas putih, sidebar dan tombol disembunyikan</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3>W7 — Mode ponsel</h3>
+      <div class="wf-judul">Data Buku &lt; 768px <span>tabel menjadi kartu berlabel</span></div>
+      <div class="wf ponsel">
+        <div class="layar">
+          <div class="utama">
+            <div class="atas"><div>☰ <strong>Data Buku</strong></div><div class="kecil redup">◐ ◯</div></div>
+            <div class="isi-layar">
+              <div class="medan">⌕ Cari…</div>
+              <div class="baris"><div class="medan">Kategori ▾</div><div class="medan">Status ▾</div></div>
+              <div class="tombol utama tengah">+ Tambah Buku</div>
+              <div class="kotak">
+                <div><span class="avatar"></span> <strong class="kecil">judul buku</strong></div>
+                <div class="kecil" style="display:flex;justify-content:space-between;border-top:1px solid var(--garis-tipis);padding-top:4px;margin-top:6px"><span class="label">ISBN</span><span>978…</span></div>
+                <div class="kecil" style="display:flex;justify-content:space-between"><span class="label">Kategori</span><span class="pil">kategori</span></div>
+                <div class="kecil" style="display:flex;justify-content:space-between"><span class="label">Stok</span><span>4 / 5</span></div>
+                <div class="kecil" style="display:flex;justify-content:space-between"><span class="label">Status</span><span class="pil">Tersedia</span></div>
+                <div class="kecil" style="display:flex;justify-content:space-between"><span class="label">Aksi</span><span>✎ 🗑</span></div>
+              </div>
+              <div class="kotak samar kecil tengah">kartu berikutnya…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="catatan">Sidebar menjadi laci yang dibuka tombol ☰. Tabel tidak digulir ke samping; tiap baris berubah menjadi kartu dengan pasangan label-nilai yang diambil dari atribut <code>data-label</code>.</p>
+    </div>
+  </div>
+
+  <h2>3. Skema komponen polimorfik</h2>
+  <p>Komponen yang sama dipakai ulang dengan varian berbeda, sehingga penambahan halaman tidak menambah kosakata visual baru.</p>
+
+  <div class="kisi-dua">
+    <div>
+      <h3>Tombol</h3>
+      <div class="wf" style="padding:14px">
+        <div class="baris" style="align-items:center">
+          <div class="tengah"><span class="tombol utama">Primary</span><div class="label">aksi utama, satu per layar</div></div>
+          <div class="tengah"><span class="tombol">Ghost</span><div class="label">aksi sekunder</div></div>
+          <div class="tengah"><span class="tombol" style="border-style:dashed">Danger</span><div class="label">aksi merusak, selalu lewat konfirmasi</div></div>
+        </div>
+      </div>
+
+      <h3>Badge status</h3>
+      <div class="wf" style="padding:14px">
+        <div class="baris" style="align-items:center">
+          <div class="tengah"><span class="pil">Tersedia</span><div class="label">stok aman</div></div>
+          <div class="tengah"><span class="pil">Terbatas</span><div class="label">stok menipis</div></div>
+          <div class="tengah"><span class="pil">Terlambat</span><div class="label">melewati jatuh tempo</div></div>
+        </div>
+        <p class="catatan">Nada badge ditentukan data, bukan halaman: aturan yang sama dipakai di Data Buku, Peminjaman, dan Laporan.</p>
+      </div>
+    </div>
+
+    <div>
+      <h3>Medan isian</h3>
+      <div class="wf" style="padding:14px">
+        <div class="tumpuk">
+          <div><div class="medan">Default — placeholder</div><div class="label">keadaan awal</div></div>
+          <div><div class="medan" style="border-width:2px">Focus — teks pengguna</div><div class="label">saat aktif, tepi menebal</div></div>
+          <div><div class="medan" style="border-style:dashed">Error — nilai ditolak</div><div class="label">pesan galat muncul di bawah medan</div></div>
+        </div>
+      </div>
+
+      <h3>Tabel yang berubah bentuk</h3>
+      <div class="wf" style="padding:14px">
+        <div class="baris">
+          <div class="kotak samar tengah kecil" style="height:96px">≥ 768px<br><strong>Tabel</strong><br>baris dan kolom</div>
+          <div class="kotak samar tengah kecil" style="height:96px">&lt; 768px<br><strong>Kartu</strong><br>pasangan label-nilai</div>
+        </div>
+        <p class="catatan">Satu markup, dua penyajian. Label kolom ikut berpindah ke kartu lewat <code>data-label</code>, sehingga tidak ada tabel yang perlu digulir ke samping.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>4. Dari wireframe ke layar jadi</h2>
+  <p>
+    Urutannya: lembar ini menetapkan tata letak dan alur, <a href="perancangan.md">perancangan.md</a> menetapkan
+    struktur data dan aturan bisnis, file Figma menaikkannya ke High-Fidelity, lalu kode menerjemahkannya.
+    Bila tata letak berubah di kode, lembar ini yang diperbarui lebih dulu agar ketiganya tidak saling bertentangan.
+  </p>
+
+  <p class="kecil redup" style="margin-top:32px">
+    Dibuat sebagai bagian Milestone 1 — Pemrograman Web 2, Universitas Pamulang.
+  </p>
+</div>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'strict' });
+</script>
+</body>
+</html>

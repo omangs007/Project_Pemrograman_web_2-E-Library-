@@ -241,13 +241,12 @@ gap 6, tiap tombol radius `radius/control`; tombol halaman aktif memakai isi
 
 ---
 
-## 5. Sebelum dikumpulkan
+## 5. Sebelum dikumpulkan — sudah beres
 
-- Setel sharing file ke **Anyone with the link**. Tautan yang tidak publik akan gagal
-  dibuka penilai, dan itu lebih merugikan daripada slot yang dikosongkan.
-- Tempelkan tautannya ke slot `[LINK FIGMA ANDA]` di `docs/perancangan.md`.
-- Panduan tugas juga meminta wireframe dan user flow dari **Stitch**, yang belum tersentuh
-  sama sekali. Itu terpisah dari pekerjaan Figma ini.
+- Sharing file sudah disetel **Anyone with the link** dan diuji dari peramban tanpa login.
+- Tautannya sudah tertempel di `docs/perancangan.md`, lengkap dengan tautan ke tiap layar.
+- Wireframe dan user flow yang diminta panduan tugas dikerjakan lewat jalur HTML/CSS yang
+  dibolehkan, ada di `docs/wireframe.html`, terpisah dari pekerjaan Figma ini.
 
 ## 6. Bila kuota MCP Figma sudah aktif
 
