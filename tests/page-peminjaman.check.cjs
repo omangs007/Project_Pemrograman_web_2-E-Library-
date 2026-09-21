@@ -41,7 +41,7 @@ function boot(hash = '') {
     console, window, location: { hash },
     document: { getElementById: id => ids[id], createElement: () => new Element() },
     localStorage: { getItem: k => memory[k] || null, setItem: (k, v) => memory[k] = String(v), removeItem: k => delete memory[k] },
-    Layout: { init: () => true, sesi: () => ({ id: 'PT002' }) },
+    Layout: { init: () => true, setAktif: () => {}, sesi: () => ({ id: 'PT002' }) },
     setTimeout: fn => { timers.set(++nextTimer, fn); return nextTimer; },
     clearTimeout: id => timers.delete(id)
   });

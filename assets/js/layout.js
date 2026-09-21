@@ -83,7 +83,8 @@ var Layout = (function () {
       if (g.pisah) judul = '<div class="nav-pisah"></div>' + judul;
       var item = g.item.map(function (m) {
         var aktif = m.id === halamanAktif ? ' aktif' : '';
-        return '<a class="nav-item' + aktif + '" href="' + UI.escapeHtml(m.href) + '"' +
+        return '<a class="nav-item' + aktif + '" data-menu="' + UI.escapeHtml(m.id) + '"' +
+          ' href="' + UI.escapeHtml(m.href) + '"' +
           (m.elemen ? ' id="' + UI.escapeHtml(m.elemen) + '"' : '') +
           (aktif ? ' aria-current="page"' : '') + '>' + IKON[m.ikon] +
           '<span>' + UI.escapeHtml(m.label) + '</span></a>';
@@ -136,6 +137,20 @@ var Layout = (function () {
     window.addEventListener('resize', function () { if (window.innerWidth >= 1024) tutup(); });
   }
 
+  /* Item aktif dapat berpindah tanpa pindah halaman: Sirkulasi memuat tab
+     Peminjaman Aktif dan Riwayat Pengembalian, yang di sidebar berdiri sebagai
+     dua entri terpisah. Tanpa ini, membuka Pengembalian menyorot Peminjaman. */
+  function setAktif(halamanAktif) {
+    var sidebar = document.getElementById('sidebar');
+    if (!sidebar) return;
+    Array.prototype.forEach.call(sidebar.querySelectorAll('.nav-item'), function (a) {
+      var cocok = a.getAttribute('data-menu') === halamanAktif;
+      a.classList.toggle('aktif', cocok);
+      if (cocok) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+
   function init(opsi) {
     initTheme();
     if (!jagaSesi()) return null;
@@ -169,6 +184,7 @@ var Layout = (function () {
     sesi: sesi,
     masuk: masuk,
     keluar: keluar,
-    init: init
+    init: init,
+    setAktif: setAktif
   };
 })();

@@ -136,6 +136,22 @@ perbaikan dua kali ke berkas yang sama. Sebelum mengirim ulang pekerjaan yang ME
 pastikan job lama benar-benar mati lewat daftar proses, bukan lewat berkas status —
 berkas status terbukti basi setelah proses dimatikan paksa.
 
+**Kontrol bawaan peramban tidak ikut tema aplikasi.** Daftar pilihan `<select>` dan panel
+kalender `<input type="date">` digambar peramban di luar alur halaman. Dengan
+`color-scheme: light dark`, keduanya mengikuti tema sistem operasi, bukan kelas `.dark`
+aplikasi; ketika aplikasi gelap tetapi sistem terang, teks `<option>` mewarisi `--text`
+yang nyaris putih di atas latar sistem yang juga putih sehingga tidak terbaca sama sekali.
+Perbaikannya mengikat `color-scheme` ke tema aplikasi dan menyetel warna `<option>` secara
+eksplisit dengan nilai pekat sebagai jaring pengaman. Menguji ini tidak bisa lewat tangkapan
+layar karena menu melayang digambar di luar halaman; ukur `getComputedStyle` pada `<option>`
+di kedua tema.
+
+**Tiruan objek di harness harus ikut tumbuh.** Menambah satu fungsi ke `Layout` langsung
+merobohkan dua harness yang memalsukan objek itu dengan `{ init, sesi }` saja. Setelah
+menambah API yang dipanggil kode halaman, lengkapi tiruannya di
+`tests/page-peminjaman.check.cjs` dan `tests/review-akhir.check.cjs`, jangan menambal
+kode produksi dengan pemeriksaan keberadaan fungsi demi menyenangkan tiruan yang basi.
+
 **Aturan warna yang berulang menjadi sumber cacat:** token tema untuk permukaan, border,
 dan teks isi; nilai literal untuk warna yang membawa makna. Di blok cetak, hasil akhirnya
 harus hitam di atas putih.

@@ -34,7 +34,12 @@
 }
 
 /* --- Dasar --- */
-html { color-scheme: light dark; }
+/* Diikat ke tema aplikasi, bukan ke tema sistem operasi. Dengan `light dark`,
+   peramban menggambar daftar <select> dan kalender <input type="date"> menurut
+   preferensi OS, sehingga saat aplikasi gelap tetapi OS terang, teks option
+   mewarisi --text yang nyaris putih di atas latar sistem yang putih. */
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -105,6 +110,14 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   box-shadow: 0 0 0 3px rgba(99, 102, 241, .25);
 }
 .glass-input[aria-invalid="true"] { border-color: #F43F5E; box-shadow: 0 0 0 3px rgba(244, 63, 94, .22); }
+/* Daftar pilihan digambar peramban di luar alur halaman dan tidak mewarisi
+   permukaan glass. color-scheme di atas sudah mengikatnya ke tema aplikasi;
+   warna eksplisit di bawah menjadi jaring pengaman bagi peramban yang tetap
+   memakai latar sistem. Nilainya sengaja pekat, bukan rgba, karena menu
+   melayang tidak punya latar di belakangnya. */
+.glass-select option { background-color: #FFFFFF; color: #0F172A; }
+.dark .glass-select option { background-color: #131A33; color: #F8FAFC; }
+
 .field-error { display: block; margin-top: 6px; color: #F43F5E; font-size: 12px; }
 .field-label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: var(--muted); }
 
@@ -420,6 +433,24 @@ h1, h2, h3, h4 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-w
   .toolbar .pendorong .btn { width: 100%; }
   .toolbar .glass-select { flex: 1 1 140px; min-width: 0; }
 }
+
+/* --- Baris saring Laporan --- */
+/* Grid empat kolom sama lebar memaksa pasangan tombol masuk ke lebar satu
+   isian, sehingga pada lebar menengah label "Setel Ulang" patah dua baris dan
+   pilihan "Seluruh Transaksi" terpotong. Tiga kolom isian dibiarkan melar,
+   kolom aksi mengambil selebar isinya saja. */
+/* Di bawah 1280px, empat kolom menyisakan sekitar 120px per isian: tanggal
+   berdesakan dan pilihan terpotong. Dua kolom lebih lapang pada rentang itu. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .panel-saring .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (min-width: 1280px) {
+  .panel-saring .grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+}
+.panel-saring .btn { white-space: nowrap; }
+.panel-saring .glass-select { min-width: 0; }
 
 /* --- Sel judul buku --- */
 .sel-buku { display: flex; align-items: center; gap: 12px; text-align: left; }

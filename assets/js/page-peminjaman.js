@@ -4,14 +4,18 @@
 (function () {
   // Evaluasi aturan dan tes Node tidak membutuhkan DOM halaman.
   if (typeof document === 'undefined') return;
-  if (!Layout.init({ halaman: 'peminjaman', judul: 'Transaksi Sirkulasi', subjudul: 'Peminjaman dan pengembalian buku' })) return;
+  // Sidebar menampilkan Peminjaman dan Pengembalian sebagai dua entri, padahal
+  // keduanya satu halaman dengan dua tab. Entri yang disorot mengikuti tab aktif,
+  // bukan nama halamannya.
+  var mulaiRiwayat = location.hash === '#riwayat';
+  if (!Layout.init({ halaman: mulaiRiwayat ? 'pengembalian' : 'peminjaman', judul: 'Transaksi Sirkulasi', subjudul: 'Peminjaman dan pengembalian buku' })) return;
 
   var R = Store.rules;
   var mount = document.getElementById('panelTransaksi');
   var tabAktif = document.getElementById('tabAktif');
   var tabRiwayat = document.getElementById('tabRiwayat');
   var saringKondisi = document.getElementById('saringKondisi');
-  var modeRiwayat = location.hash === '#riwayat';
+  var modeRiwayat = mulaiRiwayat;
   var tabel = null;
 
   function siapkanBaris() {
@@ -101,6 +105,7 @@
   function gantiTab(keRiwayat) {
     clearTimeout(timer);
     modeRiwayat = keRiwayat;
+    Layout.setAktif(keRiwayat ? 'pengembalian' : 'peminjaman');
     tabAktif.setAttribute('aria-selected', String(!keRiwayat));
     tabRiwayat.setAttribute('aria-selected', String(keRiwayat));
     tabAktif.tabIndex = keRiwayat ? -1 : 0;

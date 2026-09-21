@@ -32,7 +32,7 @@ function boot(page, edit = false) {
   const window = new Element(); window.location = location;
   const ctx = vm.createContext({ console: { warn: (...v) => warnings.push(v), log: console.log, error: console.error }, document, window, location, URLSearchParams,
     localStorage: { getItem: k => memory[k] || null, setItem(k, v) { writes++; attempts.push(JSON.parse(v)); if (writes >= failAt) throw Error('QuotaExceededError'); memory[k] = String(v); } },
-    Layout: { init: () => true, sesi: () => ({ id: 'PT001', nama: 'Petugas' }), toggleTheme() {} },
+    Layout: { init: () => true, setAktif: () => {}, sesi: () => ({ id: 'PT001', nama: 'Petugas' }), toggleTheme() {} },
     setTimeout(fn) { timers.push(fn); return timers.length; }, clearTimeout() {},
     getComputedStyle: () => ({ getPropertyValue: () => '#777' }),
     Chart: function (canvas, config) { this.config = config; this.destroy = function () {}; this.resize = function () { this.resized = true; }; charts.push(this); },
