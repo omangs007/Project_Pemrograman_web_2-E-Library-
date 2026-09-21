@@ -304,15 +304,18 @@ FORM (desktop)                          TABEL → KARTU (mobile, <768px)
 
 ## 9. Tautan rancangan
 
-- **Figma (Design System & High-Fidelity UI):** [LINK FIGMA ANDA]
+- **Figma (Design System & High-Fidelity UI):** <https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux>
+  - Halaman `Design System` — 4 collection variabel, 10 text style, 3 effect style, component set Button, Input, Badge, dan Card, ditambah section `Komponen Aplikasi` berisi Sidebar, Topbar, serta Kartu Statistik.
+  - Halaman `Dashboard` — High-Fidelity UI 1440x900: [buka layar](https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux?node-id=24-2)
+  - Halaman `Data Buku` — High-Fidelity UI 1440x900: [buka layar](https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux?node-id=31-2)
 - **Stitch by Google (Wireframe & User Flow):** [SCREENSHOT STITCH]
 
 Daftar periksa sebelum pengumpulan Milestone 1 (Pekan ke-3):
 
 - [ ] Siapkan dokumentasi Markdown berisi hirarki menu Sidebar/Navbar dan konsep ER-D sederhana dengan Mermaid.js (tersedia di dokumen ini).
 - [ ] Buat wireframe Low-to-Mid Fidelity di Stitch atau alat HTML/CSS sejenis untuk tata letak komponen, skema komponen polimorfik, atau user flow admin.
-- [ ] Susun Design System awal di Figma: palet warna, gaya tipografi, serta komponen reusable Button, Form Input, dan Card.
-- [ ] Buat High-Fidelity UI di Figma untuk kedua halaman: Dashboard dan Data Master (misalnya Data Buku).
+- [x] Susun Design System awal di Figma: palet warna, gaya tipografi, serta komponen reusable Button, Form Input, dan Card.
+- [x] Buat High-Fidelity UI di Figma untuk kedua halaman: Dashboard dan Data Master (misalnya Data Buku).
 - [ ] Isi slot Figma dengan tautan project Figma yang PUBLIK dan dapat dibuka penilai tanpa meminta akses.
 - [ ] Isi slot Stitch dengan tangkapan layar wireframe/user flow; sertakan embed link atau screenshot hasil rancangan Stitch/Figma di dokumen ini.
 

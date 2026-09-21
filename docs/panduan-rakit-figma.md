@@ -9,6 +9,13 @@ tangkapan layar. Kalau ada nilai yang saya perkirakan, itu disebutkan secara eks
 
 File: <https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux>
 
+> **Status 21 September 2026 — sudah dikerjakan, tidak perlu dirakit tangan.**
+> Paket Figma akun ini naik dari Starter ke Education, sehingga batas panggilan MCP berubah
+> dari 20 per bulan menjadi 200 per hari. Dengan kuota itu kedua layar dibangun langsung
+> lewat MCP dan cacat properti TEXT pada Button, Input, serta Badge sudah diperbaiki.
+> Dokumen ini disimpan sebagai catatan nilai layout yang dipakai dan sebagai panduan cadangan
+> bila suatu saat kedua layar perlu dirakit ulang secara manual.
+
 ---
 
 ## 1. Yang sudah ada di file

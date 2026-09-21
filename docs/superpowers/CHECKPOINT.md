@@ -1,4 +1,4 @@
-# Checkpoint — 15 September 2026
+# Checkpoint — 21 September 2026
 
 Titik henti Admin Panel E-Library Universitas Pamulang. Ditulis agar pekerjaan dapat
 dilanjutkan besok tanpa membaca ulang riwayat percakapan.
@@ -10,17 +10,17 @@ gerbang review, lalu review menyeluruh seluruh branch menemukan enam temuan Impo
 yang seluruhnya sudah diperbaiki dan diverifikasi ulang. Pekerjaan sudah di-merge ke
 `master` dan **sudah ter-push ke GitHub**.
 
-Yang tersisa bukan kodenya, melainkan tiga hal yang membutuhkan akun Anda: Figma, Vercel,
-dan Stitch.
+Yang tersisa bukan kodenya. Bagian Figma sudah rampung pada 21 September 2026; yang masih
+membutuhkan Anda tinggal menyetel sharing file Figma, deploy Vercel, dan wireframe Stitch.
 
 | Hal | Status |
 |---|---|
 | Kode aplikasi, 17 task | Selesai, review bersih |
 | Merge ke `master` | Selesai (`55bde7d`) |
 | Push ke GitHub | Selesai, 42 commit |
-| Dokumentasi Milestone 1 | Selesai, kecuali tautan Figma dan Stitch |
+| Dokumentasi Milestone 1 | Selesai, kecuali tangkapan layar Stitch |
 | Figma — design system | Selesai |
-| Figma — dua layar High-Fidelity | **Belum**, terhenti kuota |
+| Figma — dua layar High-Fidelity | Selesai, 21 September 2026 |
 | Deploy Vercel | **Belum** |
 | Wireframe Stitch | **Belum tersentuh** |
 
@@ -51,54 +51,35 @@ memakai penyimpanan terisolasi, jadi menjalankannya tidak lagi menimpa data apli
 
 ## Yang membutuhkan Anda
 
-### 1. Figma — dua layar High-Fidelity
+### 1. Figma — selesai, tinggal disetel publik
 
-File sudah dibuat dan design system-nya sudah berdiri:
 <https://www.figma.com/design/mWdzokvX5gWuq22QAhlgux>
 
-**Sudah jadi** di halaman `Design System`:
+Ketiga halaman file sudah terisi:
 
-- 4 collection, 66 variable, seluruhnya ber-scope eksplisit dan ber-code-syntax memakai
-  nama CSS asli dari kode (`var(--glass)`, `var(--muted)`, `var(--bg-a)`)
-- 10 text style, 3 effect style
-- 14 swatch warna semantik, spesimen tipografi, skala spasi dan radius
-- 4 component set: `Button`, `Input`, `Badge`, `Card`
-
-**Belum jadi:** halaman `Dashboard` dan `Data Buku` masih kosong. Keduanya adalah
-High-Fidelity UI yang diminta Milestone 1.
-
-**Satu cacat yang perlu diperbaiki:** properti TEXT pada tiga component set menimpa teks
-tiap varian, sehingga ketiga Button bertuliskan "Hapus", ketiga Input "123", dan ketiga
-Badge "Terlambat 13 hari". Badge hijau dan kuning karena itu salah makna. Cara
-memperbaikinya beserta daftar teks yang benar ada di `docs/panduan-rakit-figma.md`.
-
-**Kenapa berhenti:** kuota panggilan MCP Figma paket Starter habis. Paket itu membatasi
-tiga hal sekaligus, dan ketiganya sempat mengubah rencana:
-
-| Batasan Starter | Dampak |
+| Halaman | Isi |
 |---|---|
-| Variable dibatasi 1 mode | Light/Dark tidak bisa jadi mode variable; token diikat ke tema gelap |
-| Maksimal 3 halaman | Rencana 10 halaman dipadatkan jadi Design System + dua layar |
-| 20 panggilan MCP per bulan | Menghentikan pekerjaan; reset bulanan |
+| `Design System` | 4 collection dan 68 variable, 10 text style, 3 effect style, 14 swatch, component set Button, Input, Badge, Card; ditambah section `Komponen Aplikasi` berisi App/Sidebar (2 varian), App/Topbar, dan App/KartuStatistik (4 varian) |
+| `Dashboard` | Layar High-Fidelity 1440x900: empat kartu statistik, grafik garis tren 12 bulan, donat komposisi 8 kategori, tiga panel ringkasan |
+| `Data Buku` | Layar High-Fidelity 1440x900: toolbar cari dan saring, tabel 8 baris, badge status, kaki tabel dengan paginasi |
 
-**Salah paham yang sudah terjawab:** field **Role: Education** di pengaturan akun Figma
-BUKAN paket Education — itu hanya isian profesi. Paket Education diajukan terpisah lewat
-figma.com/education dan butuh bukti status mahasiswa. Tanda paketnya sudah aktif: badge
-di dekat Drafts tidak lagi bertuliskan **Free**, dan bagian **Your spaces** berisi space
-Education. Sebelum kedua tanda itu muncul, `whoami` akan tetap melaporkan `starter`.
+Cacat properti TEXT pada Button, Input, dan Badge sudah diperbaiki: propertinya dihapus dari
+ketiga component set lalu teks tiap varian diisi sendiri-sendiri, sehingga badge merah tidak
+lagi bertuliskan teks varian hijau.
 
-Autentikasi ulang MCP **tidak** memperbaiki ini; sudah dicoba empat kali dengan hasil
-identik, termasuk setelah autentikasi dibersihkan total.
+Angka di kedua layar diambil dari seed aplikasi, bukan dikarang: deret tren memakai
+`JUMLAH_TREN` di `assets/js/data.js`, komposisi donat memakai hitungan judul per kategori,
+dan delapan baris tabel adalah delapan data pertama berurut judul sesuai `perHalaman: 8`.
 
-**Dua jalan ke depan.** Kalau paketnya nanti aktif, minta agen melanjutkan — state
-lengkapnya tersimpan di scratchpad sesi (`ds-state.json`) berisi ID tiap component set,
-sehingga design system tidak perlu diulang. Kalau tenggatnya dekat, rakit sendiri kedua
-layar memakai `docs/panduan-rakit-figma.md`, yang memuat nilai layout persis dari
-`style.css` dan isi tabel dari seed aplikasi.
+**Kenapa akhirnya bisa jalan.** Paket akun sudah menjadi Education, dan `whoami` melaporkan
+tier `student`. Menurut dokumen rate limit Figma, Education memakai batas yang sama dengan
+seat Dev dan Full pada paket Professional: 200 panggilan per hari dan 10 per menit, bukan lagi
+20 per bulan seperti Starter. Batas 3 halaman dan 1 mode variable yang dulu membentuk rencana
+juga tidak lagi mengikat, jadi mode Light bisa ditambahkan ke collection `Color` bila mau.
 
-Setelah selesai, **setel sharing file ke "Anyone with the link"** lalu isi slot
-`[LINK FIGMA ANDA]` di `docs/perancangan.md`. Tautan yang tidak publik akan gagal dibuka
-penilai.
+**Yang masih Anda perlukan:** setel sharing file ke **Anyone with the link**. Tautannya sudah
+ditempel di `docs/perancangan.md`, tetapi penilai tetap gagal membukanya selama file masih
+privat. Ini satu-satunya langkah Figma yang tidak bisa dikerjakan lewat MCP.
 
 ### 2. Deploy Vercel
 
@@ -159,7 +140,7 @@ menulis ulang seluruh `innerHTML`-nya. Query ulang setiap kali.
 |---|---|
 | `docs/perancangan.md` | Keluaran Milestone 1: hirarki menu, ER-D, user flow, design system |
 | `README.md` | Cara menjalankan, struktur, kredensial demo, cara menguji |
-| `docs/panduan-rakit-figma.md` | Panduan merakit dua layar High-Fidelity, nilai layout persis dari kode |
+| `docs/panduan-rakit-figma.md` | Catatan nilai layout kedua layar High-Fidelity; kini panduan cadangan karena layarnya sudah dirakit |
 | `docs/keputusan-controller.md` | 38 keputusan yang diambil tanpa menunggu jawaban, beserta alasan dan biayanya bila keliru |
 | `.superpowers/sdd/2026-09-14-elibrary-admin-panel/progress.md` | Ledger lengkap eksekusi; git-ignored |
 | `.superpowers/sdd/2026-09-14-elibrary-admin-panel/review-akhir.md` | Laporan review menyeluruh seluruh branch |
