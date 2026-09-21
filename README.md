@@ -86,7 +86,7 @@ Pengaturan berupa modal profil, tema, dan reset data demo yang dibuka melalui ev
 | `assets/js/config.js` | Konfigurasi token Tailwind |
 | `assets/js/data.js` | Seed data demo |
 | `assets/js/store.js` | CRUD, persistensi, dan aturan sirkulasi |
-| `assets/js/ui.js` | Modal, toast, validasi, dan format tampilan |
+| `assets/js/ui.js` | Modal, toast, validasi, format tampilan, serta daftar pilihan dan kalender kustom |
 | `assets/js/table.js` | DataTable: cari, saring, urut, dan paginasi |
 | `assets/js/layout.js` | Sidebar, navigasi, tema, dan sesi |
 | `assets/js/page-login.js` | Validasi akun demo dan masuk |

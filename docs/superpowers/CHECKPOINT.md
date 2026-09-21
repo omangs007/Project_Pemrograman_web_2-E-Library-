@@ -144,7 +144,10 @@ yang nyaris putih di atas latar sistem yang juga putih sehingga tidak terbaca sa
 Perbaikannya mengikat `color-scheme` ke tema aplikasi dan menyetel warna `<option>` secara
 eksplisit dengan nilai pekat sebagai jaring pengaman. Menguji ini tidak bisa lewat tangkapan
 layar karena menu melayang digambar di luar halaman; ukur `getComputedStyle` pada `<option>`
-di kedua tema.
+di kedua tema. Warna saja pun tidak cukup bila tampilannya dinilai: radius, bayangan, dan gaya
+sorot memang tidak dapat disentuh CSS, sehingga daftar pilihan dan kalender akhirnya diganti
+popover sendiri di `ui.js`. Elemen aslinya tetap di DOM sebagai sumber nilai supaya kode
+halaman yang membaca `.value` dan mendengarkan `change` tidak perlu diubah sama sekali.
 
 **Tiruan objek di harness harus ikut tumbuh.** Menambah satu fungsi ke `Layout` langsung
 merobohkan dua harness yang memalsukan objek itu dengan `{ init, sesi }` saja. Setelah
