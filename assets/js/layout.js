@@ -93,7 +93,7 @@ var Layout = (function () {
     }).join('');
 
     return '<div class="sidebar-merek">' +
-             '<div class="sidebar-logo">P</div>' +
+             '<img class="sidebar-logo" src="../assets/img/logo-unpam.png" alt="Lambang Universitas Pamulang" width="40" height="40">' +
              '<div><h1>Perpustakaan Digital</h1><p>Universitas Pamulang</p></div>' +
            '</div><nav aria-label="Menu utama">' + grup + '</nav>';
   }
