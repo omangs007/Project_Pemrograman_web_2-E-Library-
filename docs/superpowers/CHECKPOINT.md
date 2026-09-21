@@ -10,8 +10,8 @@ gerbang review, lalu review menyeluruh seluruh branch menemukan enam temuan Impo
 yang seluruhnya sudah diperbaiki dan diverifikasi ulang. Pekerjaan sudah di-merge ke
 `master` dan **sudah ter-push ke GitHub**.
 
-Yang tersisa bukan kodenya. Bagian Figma sudah rampung pada 21 September 2026; yang masih
-membutuhkan Anda tinggal menyetel sharing file Figma, deploy Vercel, dan wireframe Stitch.
+Yang tersisa bukan kodenya. Figma dan Vercel sudah rampung pada 21 September 2026; yang
+masih menganggur tinggal wireframe dan user flow di Stitch.
 
 | Hal | Status |
 |---|---|
@@ -21,7 +21,7 @@ membutuhkan Anda tinggal menyetel sharing file Figma, deploy Vercel, dan wirefra
 | Dokumentasi Milestone 1 | Selesai, kecuali tangkapan layar Stitch |
 | Figma — design system | Selesai |
 | Figma — dua layar High-Fidelity | Selesai, 21 September 2026 |
-| Deploy Vercel | **Belum** |
+| Deploy Vercel | Selesai, 21 September 2026 |
 | Wireframe Stitch | **Belum tersentuh** |
 
 Repositori: <https://github.com/omangs007/Project_Pemrograman_web_2-E-Library->
@@ -81,22 +81,39 @@ juga tidak lagi mengikat, jadi mode Light bisa ditambahkan ke collection `Color`
 ditempel di `docs/perancangan.md`, tetapi penilai tetap gagal membukanya selama file masih
 privat. Ini satu-satunya langkah Figma yang tidak bisa dikerjakan lewat MCP.
 
-### 2. Deploy Vercel
+### 2. Deploy Vercel — selesai
 
-Belum dikerjakan. Setelah live, isi slot `[LINK VERCEL ANDA]` di `README.md`.
+<https://project-pemrograman-web-2-e-library.vercel.app>
+
+Di-import dari repositori GitHub sebagai situs statis, preset Other, tanpa build command
+dan tanpa output directory. Tidak ada `package.json`, jadi Vercel menyajikan berkas apa
+adanya. Setiap push ke `master` memicu deploy ulang otomatis.
+
+Sebelum deploy, dua hal yang biasanya merusak deploy Windows ke Linux sudah diperiksa:
+seluruh aset yang dirujuk HTML terlacak git (tidak ada berkas yang hanya ada di komputer
+lokal), dan penulisan huruf besar-kecil setiap referensi cocok persis dengan nama
+berkasnya. Slot `[LINK VERCEL ANDA]` di README sudah terisi.
 
 ### 3. Wireframe dan user flow di Stitch
 
 Belum tersentuh sama sekali, dan ini terpisah dari pekerjaan Figma. Panduan tugas
 memintanya untuk Milestone 1. Slotnya `[SCREENSHOT STITCH]` di `docs/perancangan.md`.
 
-### 4. Pertimbangkan identitas commit
+### 4. Identitas commit — sudah diperbaiki
 
-Seluruh 42 commit tercatat atas nama akun lain, sementara repositorinya milik
-`omangs007`. Push berhasil, jadi aksesnya tidak bermasalah — tetapi kontribusinya tidak
-akan tertaut ke profil `omangs007` di halaman repo. Bila penilai memeriksa riwayat commit,
-ini bisa menimbulkan pertanyaan. Mengubahnya berarti menulis ulang seluruh riwayat, jadi
-keputusannya di Anda.
+Seluruh riwayat kini atas nama `omangs007 <128009290+omangs007@users.noreply.github.com>`,
+dan GitHub memetakan tiap commit ke akun tersebut. Sebelumnya 43 commit tercatat atas nama
+akun lain karena `git config --global` di mesin ini menyetel identitas itu; kredensial
+push-nya sendiri selalu `omangs007`, jadi ini murni soal penulis commit, bukan kolaborator.
+
+Perbaikannya memakai `git filter-branch --env-filter` atas 44 commit lalu force push dengan
+`--force-with-lease`. Isi pohon tidak berubah satu byte pun, hanya hash-nya yang bergeser;
+`c9a2fec` menjadi `d2d6b29`. Cadangan sebelum penulisan ulang disimpan di ref lokal
+`refs/backup/pre-rewrite-20260921` (`5bf65ae`) dan tidak ikut ter-push.
+
+Repo ini sekarang punya `user.name` dan `user.email` lokal sendiri, jadi commit berikutnya
+sudah benar tanpa perlu menyentuh config global mesin — repositori lain di mesin ini masih
+memakai identitas akun lain.
 
 ---
 
